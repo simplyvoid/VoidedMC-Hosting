@@ -423,5 +423,14 @@
       navLinks.classList.toggle('show');
     });
   </script>
+    <!-- Scroll to #home on page load -->
+  <script>
+    window.addEventListener('DOMContentLoaded', () => {
+      const homeSection = document.getElementById('home');
+      if (homeSection) {
+        homeSection.scrollIntoView({ behavior: 'smooth' });
+      }
+    });
+  </script>
 </body>
 </html>

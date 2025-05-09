@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Select Your Plan - VoidedHosting</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #9b5de5;
+      --background: #0e0e0e;
+      --text: #f1f1f1;
+      --highlight: #6a0dad;
+      --card: #1e1e1e;
+      --accent: #4b0a9b;
+    }
+
+    html, body {
+      height: 100%;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      font-family: 'Inter', sans-serif;
+      background-color: var(--background);
+      color: var(--text);
+    }
+
+    main {
+      flex: 1;
+    }
+
+    header {
+      text-align: center;
+      padding: 3rem 1rem 2rem;
+      background: linear-gradient(to bottom, var(--highlight), transparent);
+    }
+
+    header h1 {
+      font-size: 2.8rem;
+      color: var(--text);
+      margin-bottom: 0.5rem;
+    }
+
+    .plans {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2rem;
+      padding: 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .plan {
+      background: var(--card);
+      border-radius: 12px;
+      padding: 2rem;
+      text-align: center;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      box-shadow: 0 0 0 transparent;
+      border: 2px solid transparent;
+    }
+
+    .plan:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+      border-color: var(--highlight);
+    }
+
+    .plan h2 {
+      font-size: 1.6rem;
+      color: var(--highlight);
+      margin-bottom: 0.5rem;
+    }
+
+    .price {
+      font-size: 1.4rem;
+      margin: 1rem 0;
+      color: var(--text);
+    }
+
+    .features {
+      list-style: none;
+      padding: 0;
+      margin: 1rem 0;
+      text-align: left;
+    }
+
+    .features li::before {
+      content: "\2726";
+      color: var(--highlight);
+      margin-right: 8px;
+    }
+
+    .select-button {
+      margin-top: 1rem;
+      padding: 0.75rem 1.5rem;
+      background-color: var(--highlight);
+      border: none;
+      color: white;
+      border-radius: 5px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background 0.3s, transform 0.3s;
+    }
+
+    .select-button:hover {
+      background-color: var(--accent);
+      transform: scale(1.05);
+    }
+
+    footer {
+      text-align: center;
+      padding: 2rem 1rem;
+      background: var(--card);
+      color: #aaa;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <header>
+      <h1>Select Your Adventure</h1>
+      <p>Choose the perfect plan for your Minecraft journey.</p>
+    </header>
+
+    <section class="plans">
+      <div class="plan">
+        <h2>Grass Plan</h2>
+        <p class="price">Free</p>
+        <ul class="features">
+          <li>1 GB RAM</li>
+          <li>1 vCPU</li>
+          <li>10 GB SSD</li>
+          <li>Basic Support</li>
+        </ul>
+        <button class="select-button">Get Started</button>
+      </div>
+
+      <div class="plan">
+        <h2>Stone Plan</h2>
+        <p class="price">$5 / month</p>
+        <ul class="features">
+          <li>4 GB RAM</li>
+          <li>2 vCPU</li>
+          <li>50 GB SSD</li>
+          <li>Priority Queue</li>
+        </ul>
+        <button class="select-button">Upgrade</button>
+      </div>
+
+      <div class="plan">
+        <h2>Diamond Plan</h2>
+        <p class="price">$10 / month</p>
+        <ul class="features">
+          <li>8 GB RAM</li>
+          <li>4 vCPU</li>
+          <li>100 GB SSD</li>
+          <li>Dedicated Support</li>
+        </ul>
+        <button class="select-button">Go Pro</button>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    &copy; 2025 VoidedHosting. All rights reserved.
+  </footer>
+</body>
+</html>

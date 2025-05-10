@@ -39,7 +39,6 @@
       visibility: hidden;
     }
 
-    /* Modern Navbar */
     .navbar {
       position: fixed;
       top: 0;
@@ -126,7 +125,7 @@
       content: "";
       position: absolute;
       inset: 0;
-      background: rgba(0, 0, 0, 0.6);
+      background: rgba(0, 0, 0, 0.2); /* Lightened overlay */
       z-index: 0;
     }
 
@@ -336,8 +335,11 @@
     </div>
   </nav>
 
+  <!-- ✅ Scroll target for Home -->
+  <div id="home"></div>
+
   <!-- Hero Section -->
-  <header id="#home">
+  <header>
     <div class="header-flex-container">
       <div class="header-left">
         <h1>VoidedMC Hosting</h1>
@@ -380,17 +382,17 @@
     <div class="about-section">
       <div class="feature-icon">🎯</div>
       <h3>Our Mission</h3>
-      <p>At VoidedMC Hosting, our mission is to make high-performance Minecraft server hosting accessible to everyone—without cost or compromise. We believe in empowering creators, gamers, and communities with the tools they need to thrive.</p>
+      <p>At VoidedMC Hosting, our mission is to make high-performance Minecraft server hosting accessible to everyone—without cost or compromise.</p>
     </div>
     <div class="about-section">
       <div class="feature-icon">🧑‍💻</div>
       <h3>Meet The Owner</h3>
-      <p>VoidedMC Hosting was founded by a passionate gamer and developer who saw a gap in the market for truly free hosting. Backed by technical experience and community-first values, our founder ensures users get the best possible experience.</p>
+      <p>VoidedMC Hosting was founded by a passionate gamer and developer who saw a gap in the market for truly free hosting.</p>
     </div>
     <div class="about-section">
       <div class="feature-icon">⚙️</div>
       <h3>Our Hardware</h3>
-      <p>We run on enterprise-grade AMD EPYC CPUs, NVMe SSDs, and redundant networking to ensure blazing-fast performance and uptime. Our infrastructure is built for scale, speed, and reliability—so your server is always ready to play.</p>
+      <p>We run on enterprise-grade AMD EPYC CPUs, NVMe SSDs, and redundant networking to ensure blazing-fast performance and uptime.</p>
     </div>
   </section>
 
@@ -399,7 +401,7 @@
     &copy; 2025 VoidedMC. All rights reserved.
   </footer>
 
-  <!-- Scroll Animation Script -->
+  <!-- Scripts -->
   <script>
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
@@ -415,21 +417,40 @@
       observer.observe(el);
     });
 
-    // Navbar Toggle
     const navToggle = document.getElementById('nav-toggle');
     const navLinks = document.getElementById('nav-links');
-
     navToggle.addEventListener('click', () => {
       navLinks.classList.toggle('show');
     });
   </script>
-    <!-- Scroll to #home on page load -->
+
+  <!-- Scroll to #home on page load -->
   <script>
     window.addEventListener('DOMContentLoaded', () => {
       const homeSection = document.getElementById('home');
       if (homeSection) {
         homeSection.scrollIntoView({ behavior: 'smooth' });
       }
+    });
+  </script>
+
+  <!-- Smooth scroll with offset -->
+  <script>
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+        const targetId = this.getAttribute('href').substring(1);
+        const target = document.getElementById(targetId);
+        if (target) {
+          e.preventDefault();
+          const offset = 80;
+          const elementPosition = target.getBoundingClientRect().top + window.scrollY;
+          const offsetPosition = elementPosition - offset;
+          window.scrollTo({
+            top: offsetPosition,
+            behavior: 'smooth'
+          });
+        }
+      });
     });
   </script>
 </body>

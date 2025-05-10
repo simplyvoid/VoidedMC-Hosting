@@ -39,6 +39,7 @@
       visibility: hidden;
     }
 
+    /* Navbar */
     .navbar {
       position: fixed;
       top: 0;
@@ -111,7 +112,6 @@
 
     header {
       position: relative;
-      background: url('https://i.redd.it/4ec77oea73c41.gif') center/cover no-repeat fixed;
       height: 100vh;
       display: flex;
       align-items: center;
@@ -119,14 +119,17 @@
       padding: 2rem;
       color: #fff;
       margin-top: 60px;
+      overflow: hidden;
     }
 
-    header::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: rgba(0, 0, 0, 0.2); /* Lightened overlay */
-      z-index: 0;
+    .background-video {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      object-fit: cover;
+      z-index: -1;
     }
 
     .header-flex-container {
@@ -320,7 +323,7 @@
 </head>
 <body>
 
-  <!-- ✅ Modern Navbar -->
+  <!-- Navbar -->
   <nav class="navbar">
     <div class="navbar-container">
       <div class="navbar-logo">
@@ -335,11 +338,12 @@
     </div>
   </nav>
 
-  <!-- ✅ Scroll target for Home -->
-  <div id="home"></div>
-
   <!-- Hero Section -->
-  <header>
+  <header id="home">
+    <video autoplay muted loop playsinline class="background-video">
+      <source src="MCShaders.mp4" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
     <div class="header-flex-container">
       <div class="header-left">
         <h1>VoidedMC Hosting</h1>
@@ -382,17 +386,17 @@
     <div class="about-section">
       <div class="feature-icon">🎯</div>
       <h3>Our Mission</h3>
-      <p>At VoidedMC Hosting, our mission is to make high-performance Minecraft server hosting accessible to everyone—without cost or compromise.</p>
+      <p>At VoidedMC Hosting, our mission is to make high-performance Minecraft server hosting accessible to everyone—without cost or compromise. We believe in empowering creators, gamers, and communities with the tools they need to thrive.</p>
     </div>
     <div class="about-section">
       <div class="feature-icon">🧑‍💻</div>
       <h3>Meet The Owner</h3>
-      <p>VoidedMC Hosting was founded by a passionate gamer and developer who saw a gap in the market for truly free hosting.</p>
+      <p>VoidedMC Hosting was founded by a passionate gamer and developer who saw a gap in the market for truly free hosting. Backed by technical experience and community-first values, our founder ensures users get the best possible experience.</p>
     </div>
     <div class="about-section">
       <div class="feature-icon">⚙️</div>
       <h3>Our Hardware</h3>
-      <p>We run on enterprise-grade AMD EPYC CPUs, NVMe SSDs, and redundant networking to ensure blazing-fast performance and uptime.</p>
+      <p>We run on enterprise-grade AMD EPYC CPUs, NVMe SSDs, and redundant networking to ensure blazing-fast performance and uptime. Our infrastructure is built for scale, speed, and reliability—so your server is always ready to play.</p>
     </div>
   </section>
 
@@ -401,7 +405,7 @@
     &copy; 2025 VoidedMC. All rights reserved.
   </footer>
 
-  <!-- Scripts -->
+  <!-- Scroll Animation Script -->
   <script>
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
@@ -424,34 +428,5 @@
     });
   </script>
 
-  <!-- Scroll to #home on page load -->
-  <script>
-    window.addEventListener('DOMContentLoaded', () => {
-      const homeSection = document.getElementById('home');
-      if (homeSection) {
-        homeSection.scrollIntoView({ behavior: 'smooth' });
-      }
-    });
-  </script>
-
-  <!-- Smooth scroll with offset -->
-  <script>
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-      anchor.addEventListener('click', function(e) {
-        const targetId = this.getAttribute('href').substring(1);
-        const target = document.getElementById(targetId);
-        if (target) {
-          e.preventDefault();
-          const offset = 80;
-          const elementPosition = target.getBoundingClientRect().top + window.scrollY;
-          const offsetPosition = elementPosition - offset;
-          window.scrollTo({
-            top: offsetPosition,
-            behavior: 'smooth'
-          });
-        }
-      });
-    });
-  </script>
 </body>
 </html>

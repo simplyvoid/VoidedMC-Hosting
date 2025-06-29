@@ -1,81 +1,97 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Select Your Plan - VoidedMC</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
   <style>
     :root {
       --primary: #9b5de5;
       --background: #0e0e0e;
-      --text: #f1f1f1;
-      --highlight: #6a0dad;
-      --card: #1e1e1e;
+      --text: #ffffff;
+      --highlight: #c77dff;
+      --card: rgba(30, 30, 30, 0.85);
       --accent: #4b0a9b;
     }
 
     html, body {
       height: 100%;
       margin: 0;
+      font-family: 'Inter', sans-serif;
+      color: var(--text);
+      background: url('https://i.redd.it/hey-i-just-realised-that-minecraft-dropped-wallpapers-for-v0-af632nce2dud1.jpg?width=3840&format=pjpg&auto=webp&s=102770acfd3d1534ba97f09cfcaab822e6485b9e') no-repeat center center fixed;
+      background-size: cover;
       display: flex;
       flex-direction: column;
-      font-family: 'Inter', sans-serif;
-      background-color: var(--background);
-      color: var(--text);
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background: rgba(14, 14, 14, 0.7);
+      backdrop-filter: blur(3px);
+      z-index: -1;
     }
 
     main {
       flex: 1;
+      display: flex;
+      flex-direction: column;
     }
 
     header {
       text-align: center;
-      padding: 3rem 1rem 2rem;
-      background: linear-gradient(to bottom, var(--highlight), transparent);
+      padding: 4rem 1rem 2rem;
+      background: rgba(0, 0, 0, 0.4);
+      border-bottom: 1px solid #222;
     }
 
     header h1 {
-      font-size: 2.8rem;
-      color: var(--text);
+      font-size: 3rem;
       margin-bottom: 0.5rem;
+      color: var(--highlight);
+    }
+
+    header p {
+      font-size: 1.2rem;
+      color: #ccc;
     }
 
     .plans {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
       gap: 2rem;
-      padding: 2rem;
+      padding: 3rem 2rem;
       max-width: 1200px;
       margin: 0 auto;
     }
 
     .plan {
       background: var(--card);
-      border-radius: 12px;
+      border-radius: 16px;
       padding: 2rem;
       text-align: center;
+      border: 1px solid #333;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
       transition: transform 0.3s ease, box-shadow 0.3s ease;
-      box-shadow: 0 0 0 transparent;
-      border: 2px solid transparent;
     }
 
     .plan:hover {
-      transform: translateY(-8px);
-      box-shadow: 0 10px 20px rgba(0,0,0,0.3);
-      border-color: var(--highlight);
+      transform: translateY(-6px);
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.6);
     }
 
     .plan h2 {
-      font-size: 1.6rem;
-      color: var(--highlight);
+      font-size: 1.8rem;
       margin-bottom: 0.5rem;
+      color: var(--highlight);
     }
 
     .price {
       font-size: 1.4rem;
       margin: 1rem 0;
-      color: var(--text);
     }
 
     .features {
@@ -85,10 +101,17 @@
       text-align: left;
     }
 
+    .features li {
+      margin: 0.4rem 0;
+      position: relative;
+      padding-left: 1.4rem;
+    }
+
     .features li::before {
-      content: "\2726";
+      content: "★";
+      position: absolute;
+      left: 0;
       color: var(--highlight);
-      margin-right: 8px;
     }
 
     .select-button {
@@ -97,10 +120,10 @@
       background-color: var(--highlight);
       border: none;
       color: white;
-      border-radius: 5px;
+      border-radius: 8px;
       font-size: 1rem;
       cursor: pointer;
-      transition: background 0.3s, transform 0.3s;
+      transition: background 0.3s, transform 0.2s ease-in-out;
     }
 
     .select-button:hover {
@@ -111,8 +134,13 @@
     footer {
       text-align: center;
       padding: 2rem 1rem;
-      background: var(--card);
+      background: rgba(0, 0, 0, 0.6);
       color: #aaa;
+      font-size: 0.9rem;
+    }
+
+    a {
+      text-decoration: none;
     }
   </style>
 </head>
@@ -133,15 +161,17 @@
           <li>15 GB SSD</li>
           <li>Basic Support</li>
         </ul>
-        <a href="https://adminconsole.voidedmc.net/auth/register"><button class="select-button">Get Started</button></a>
+        <a href="https://adminconsole.voidedmc.net/auth/register">
+          <button class="select-button">Get Started</button>
+        </a>
       </div>
 
       <div class="plan">
         <h2>Paid Tier</h2>
         <p class="price">$5 / month</p>
         <ul class="features">
-          <li>4 GB RAM (expandable upon request)</li>
-          <li>4 vCPU (expandable upon request)</li>
+          <li>4 GB RAM (expandable)</li>
+          <li>4 vCPU (expandable)</li>
           <li>30 GB SSD</li>
           <li>Basic Support</li>
         </ul>

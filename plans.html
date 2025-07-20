@@ -15,37 +15,49 @@
       --accent: #4b0a9b;
     }
 
-    html, body {
-      height: 100%;
+    body {
       margin: 0;
       font-family: 'Inter', sans-serif;
       color: var(--text);
-      background: video('MCShaders.mp4')no-repeat center center fixed;
-      background-size: cover;
-      display: flex;
-      flex-direction: column;
     }
 
+    /* Dark overlay on top of video */
     body::before {
       content: "";
       position: fixed;
       inset: 0;
-      background: rgba(14, 14, 14, 0.7);
+      background: rgba(14, 14, 14, 0.6);
       backdrop-filter: blur(3px);
       z-index: -1;
     }
 
+    /* Video background */
+    .background-video {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: -2; /* Push video behind everything */
+    }
+
     main {
-      flex: 1;
+      position: relative;
+      z-index: 1;
       display: flex;
       flex-direction: column;
     }
 
     header {
       text-align: center;
-      padding: 4rem 1rem 2rem;
-      background: rgba(0, 0, 0, 0.4);
+      padding: 6rem 1rem 3rem;
       border-bottom: 1px solid #222;
+    }
+
+    .header-content {
+      position: relative;
+      z-index: 1;
     }
 
     header h1 {
@@ -59,6 +71,7 @@
       color: #ccc;
     }
 
+    /* Plans Section */
     .plans {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -131,6 +144,7 @@
       transform: scale(1.05);
     }
 
+    /* Footer */
     footer {
       text-align: center;
       padding: 2rem 1rem;
@@ -145,12 +159,20 @@
   </style>
 </head>
 <body>
+  <!-- Video Background -->
+  <video autoplay loop muted playsinline class="background-video">
+    <source src="MCShaders.mp4" type="video/mp4" />
+  </video>
+
   <main>
     <header>
-      <h1>Select Your Adventure</h1>
-      <p>Choose the perfect plan for your Minecraft journey.</p>
+      <div class="header-content">
+        <h1>Select Your Adventure</h1>
+        <p>Choose the perfect plan for your Minecraft journey.</p>
+      </div>
     </header>
 
+    <!-- Plans Section -->
     <section class="plans">
       <div class="plan">
         <h2>Free Tier</h2>
@@ -180,6 +202,7 @@
     </section>
   </main>
 
+  <!-- Footer -->
   <footer>
     &copy; 2025 VoidedMC. All rights reserved.
   </footer>

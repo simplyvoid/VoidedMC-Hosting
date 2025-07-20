@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3581720027198766"
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3581720027198766"
      crossorigin="anonymous"></script>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -31,14 +31,31 @@
       background-color: var(--background);
       color: var(--text);
       overflow-x: hidden;
+      position: relative;
     }
 
-    :target::before {
-      content: "";
-      display: block;
-      height: 80px;
-      margin-top: -80px;
-      visibility: hidden;
+    /* Fullscreen video overlay */
+    #portal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.85);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.6s ease;
+    }
+    #portal-overlay.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    #portal-video {
+      max-width: 80%;
+      max-height: 80%;
+      border-radius: 12px;
+      box-shadow: 0 0 20px #6a0dad;
     }
 
     .navbar {
@@ -50,7 +67,6 @@
       z-index: 1000;
       box-shadow: 0 2px 10px rgba(0,0,0,0.5);
     }
-
     .navbar-container {
       max-width: 1200px;
       margin: 0 auto;
@@ -59,14 +75,12 @@
       align-items: center;
       gap: 1rem;
     }
-
     .navbar-logo a {
       font-size: 1.5rem;
       font-weight: 700;
       color: #C084FC;
       text-decoration: none;
     }
-
     .navbar-server {
       flex: 1;
       text-align: center;
@@ -75,44 +89,27 @@
       cursor: pointer;
       transition: color 0.3s;
     }
-
-    .navbar-server:hover {
-      color: #ffffff;
-    }
-
-    .navbar-links {
-      display: flex;
-      gap: 1.5rem;
-    }
-
+    .navbar-server:hover { color: #ffffff; }
+    .navbar-links { display: flex; gap: 1.5rem; }
     .navbar-links a {
       color: #C084FC;
       text-decoration: none;
       font-weight: 600;
       transition: color 0.3s;
     }
-
-    .navbar-links a:hover {
-      color: #ffffff;
-    }
-
+    .navbar-links a:hover { color: #ffffff; }
     .navbar-toggle {
       display: none;
       font-size: 1.5rem;
       color: #C084FC;
       cursor: pointer;
     }
-
     @media (max-width: 768px) {
-      .navbar-container {
-        flex-wrap: wrap;
-      }
-
+      .navbar-container { flex-wrap: wrap; }
       .navbar-server {
         width: 100%;
         margin-top: 0.5rem;
       }
-
       .navbar-links {
         position: absolute;
         top: 60px;
@@ -124,14 +121,8 @@
         display: none;
         border-radius: 8px;
       }
-
-      .navbar-links.show {
-        display: flex;
-      }
-
-      .navbar-toggle {
-        display: block;
-      }
+      .navbar-links.show { display: flex; }
+      .navbar-toggle { display: block; }
     }
 
     header {
@@ -145,8 +136,6 @@
       margin-top: 60px;
       overflow: hidden;
     }
-
-    /* Background image for header */
     header img.header-bg {
       position: absolute;
       top: 50%;
@@ -157,7 +146,6 @@
       object-fit: cover;
       z-index: -1;
     }
-
     .header-flex-container {
       position: relative;
       z-index: 1;
@@ -169,29 +157,24 @@
       width: 100%;
       padding: 2rem;
     }
-
     .header-left {
       flex: 1 1 50%;
       padding-right: 2rem;
     }
-
     .header-left h1 {
       font-size: 3.5rem;
       color: #C084FC;
       margin-bottom: 1rem;
     }
-
     .header-left h2 {
       font-size: 2rem;
       margin-bottom: 1rem;
     }
-
     .header-left p {
       font-size: 1.2rem;
       line-height: 1.6;
       margin-bottom: 2rem;
     }
-
     .cta-button {
       background-color: #B57EDC;
       color: white;
@@ -201,48 +184,12 @@
       font-size: 1rem;
       cursor: pointer;
       transition: background 0.3s, transform 0.3s;
+      display: inline-block;
+      text-decoration: none;
     }
-
     .cta-button:hover {
       background-color: #4b0a9b;
       transform: scale(1.05);
-    }
-
-    .header-right {
-      flex: 1 1 40%;
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
-    }
-
-    .feature-card {
-      background-color: rgba(30, 30, 30, 0.85);
-      padding: 1.5rem;
-      border-radius: 10px;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-      opacity: 0;
-      transform: translateY(20px);
-    }
-
-    .feature-card:hover {
-      transform: translateY(-10px) scale(1.02);
-      box-shadow: 0 8px 16px rgba(0,0,0,0.4);
-    }
-
-    .feature-card .feature-icon {
-      font-size: 2rem;
-      margin-bottom: 0.5rem;
-      color: var(--highlight);
-    }
-
-    .feature-card h3 {
-      margin-bottom: 0.5rem;
-      color: #C084FC;
-    }
-
-    .feature-card p {
-      font-size: 0.95rem;
-      color: #ddd;
     }
 
     .features {
@@ -253,7 +200,6 @@
       max-width: 1000px;
       text-align: center;
     }
-
     .feature {
       background: var(--card);
       padding: 2rem;
@@ -261,12 +207,10 @@
       flex: 1;
       transition: transform 0.3s, box-shadow 0.3s;
     }
-
     .feature:hover {
       transform: translateY(-10px);
       box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
     }
-
     .feature-icon {
       font-size: 2rem;
       margin-bottom: 1rem;
@@ -278,14 +222,12 @@
       max-width: 900px;
       margin: 0 auto;
     }
-
     .about h2 {
       font-size: 2.5rem;
       text-align: center;
       margin-bottom: 2rem;
       color: #C084FC;
     }
-
     .about-section {
       background-color: var(--card);
       padding: 2rem;
@@ -295,19 +237,23 @@
       transform: translateY(20px);
       transition: opacity 0.6s ease, transform 0.6s ease;
     }
-
     .about-section h3 {
       font-size: 1.8rem;
       color: var(--highlight);
       margin-bottom: 1rem;
     }
-
     .about-section p {
       font-size: 1rem;
       line-height: 1.6;
       color: #ddd;
     }
-
+    footer a {
+      color: #9b5de5;
+      text-decoration: none;
+    }
+    footer a:hover {
+      text-decoration: underline;
+    }
     footer {
       text-align: center;
       padding: 2rem 1rem;
@@ -325,7 +271,6 @@
         transform: translateY(0);
       }
     }
-
     .animate {
       animation: fadeInUp 0.6s ease forwards;
     }
@@ -335,12 +280,10 @@
         flex-direction: column;
         text-align: center;
       }
-
       .header-left, .header-right {
         flex: 1 1 100%;
         padding: 0;
       }
-
       .header-right {
         margin-top: 2rem;
       }
@@ -349,18 +292,15 @@
 </head>
 <body>
 
-  <!-- ✅ Modern Navbar -->
+  <!-- Video Overlay -->
+  <div id="portal-overlay">
+    <video id="portal-video" src="portal.mp4" autoplay muted playsinline></video>
+  </div>
+
   <nav class="navbar">
     <div class="navbar-container">
-      <div class="navbar-logo">
-        <a href="#home">VoidedMC Hosting</a>
-      </div>
-
-      <!-- Official Server IP -->
-      <div class="navbar-server" onclick="copyToClipboard('Play.Voidedmc.net')">
-        Official MC Server: Play.Voidedmc.net
-      </div>
-
+      <div class="navbar-logo"><a href="#home">VoidedMC Hosting</a></div>
+      <div class="navbar-server" onclick="copyToClipboard('Play.Voidedmc.net')">Official MC Server: Play.Voidedmc.net</div>
       <div class="navbar-links" id="nav-links">
         <a href="#home">Home</a>
         <a href="#about">About Us</a>
@@ -370,10 +310,8 @@
     </div>
   </nav>
 
-  <!-- ✅ Scroll target for Home -->
   <div id="home"></div>
 
-  <!-- Hero Section with Background Image -->
   <header>
     <img src="serverimage.png" alt="Background" class="header-bg" />
     <div class="header-flex-container">
@@ -381,7 +319,7 @@
         <h1>VoidedMC Hosting</h1>
         <h2>100% Free Hosting.</h2>
         <p>We're not lying... Boot your FREE Minecraft server in a matter of minutes! No catch, no credit card.</p>
-        <a href="plans.html" class="cta-button">Get Started Now</a>
+        <a href="plans.html" class="cta-button" id="start-btn">Get Started Now</a>
       </div>
     </div>
   </header>
@@ -495,30 +433,32 @@
     text-decoration: underline;
   }
 </style>
-<footer>
-  &copy; 2025 VoidedMC. All rights reserved.<br>
-  <a href="/terms.html">Terms of Service</a>
-</footer>
-  <!-- Scripts -->
+  <footer>&copy; 2025 VoidedMC. All rights reserved.<br><a href="/terms.html">Terms of Service</a></footer>
+
   <script>
     function copyToClipboard(text) {
-      navigator.clipboard.writeText(text).then(() => {
-        alert('Server IP copied: ' + text);
-      });
+      navigator.clipboard.writeText(text).then(() => alert('Server IP copied: ' + text));
     }
 
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('animate');
-        }
+    // entrance animations
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) e.target.classList.add('animate');
       });
-    }, {
-      threshold: 0.1
-    });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.feature-card, .about-section').forEach(el => observer.observe(el));
 
-    document.querySelectorAll('.feature-card, .about-section').forEach(el => {
-      observer.observe(el);
+    // Portal video on click
+    document.getElementById('start-btn').addEventListener('click', function(e) {
+      e.preventDefault();
+      const overlay = document.getElementById('portal-overlay');
+      overlay.classList.add('active');
+      const video = document.getElementById('portal-video');
+      video.currentTime = 0;
+      video.play();
+      setTimeout(() => {
+        window.location.href = this.href;
+      }, 2000); // adjust to match video length
     });
   </script>
 </body>

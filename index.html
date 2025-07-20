@@ -460,22 +460,6 @@
         window.location.href = this.href;
       }, 1000); // adjust to match video length
     });
-   // Reset video overlay on page load or restore
-    window.addEventListener('pageshow', function (event) {
-     const overlay = document.getElementById('portal-overlay');
-     const video = document.getElementById('portal-video');
-
-     if (overlay) {
-       overlay.classList.remove('active');
-       overlay.style.opacity = '0';
-       overlay.style.pointerEvents = 'none';
-     }
-
-     if (video) {
-       video.pause();
-       video.currentTime = 0;
-     }
-   });
   </script>
 </body>
 </html>

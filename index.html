@@ -452,13 +452,16 @@
     document.getElementById('start-btn').addEventListener('click', function(e) {
       e.preventDefault();
       const overlay = document.getElementById('portal-overlay');
-      overlay.classList.add('active');
       const video = document.getElementById('portal-video');
+      overlay.classList.add('active');
       video.currentTime = 0;
       video.play();
-      setTimeout(() => {
+
+      // HIDE OVERLAY WHEN VIDEO ENDS
+      video.addEventListener('ended', () => {
+        overlay.classList.remove('active');
         window.location.href = this.href;
-      }, 1000); // adjust to match video length
+      }, { once: true });
     });
   </script>
 </body>

@@ -52,10 +52,10 @@
       pointer-events: auto;
     }
     #portal-video {
-      max-width: 80%;
-      max-height: 80%;
-      border-radius: 12px;
-      box-shadow: 0 0 20px #6a0dad;
+      max-width: 100%;
+      max-height: 100%;
+      border-radius: 18px;
+      box-shadow: 0 0 26px #6a0dad;
     }
 
     .navbar {
@@ -299,7 +299,7 @@
 
   <nav class="navbar">
     <div class="navbar-container">
-      <div class="navbar-logo"><a href="#home">VoidedMC Hosting</a></div>
+      <div class="navbar-logo"><a href="#home">VoidedMC</a></div>
       <div class="navbar-server" onclick="copyToClipboard('Play.Voidedmc.net')">Official MC Server: Play.Voidedmc.net</div>
       <div class="navbar-links" id="nav-links">
         <a href="#home">Home</a>
@@ -458,7 +458,7 @@
       video.play();
       setTimeout(() => {
         window.location.href = this.href;
-      }, 2000); // adjust to match video length
+      }, 1000); // adjust to match video length
     });
   </script>
 </body>

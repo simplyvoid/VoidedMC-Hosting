@@ -57,6 +57,7 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
+      gap: 1rem;
     }
 
     .navbar-logo a {
@@ -64,6 +65,19 @@
       font-weight: 700;
       color: #C084FC;
       text-decoration: none;
+    }
+
+    .navbar-server {
+      flex: 1;
+      text-align: center;
+      color: #C084FC;
+      font-weight: 600;
+      cursor: pointer;
+      transition: color 0.3s;
+    }
+
+    .navbar-server:hover {
+      color: #ffffff;
     }
 
     .navbar-links {
@@ -90,6 +104,15 @@
     }
 
     @media (max-width: 768px) {
+      .navbar-container {
+        flex-wrap: wrap;
+      }
+
+      .navbar-server {
+        width: 100%;
+        margin-top: 0.5rem;
+      }
+
       .navbar-links {
         position: absolute;
         top: 60px;
@@ -339,6 +362,12 @@
       <div class="navbar-logo">
         <a href="#home">VoidedMC Hosting</a>
       </div>
+
+      <!-- Official Server IP -->
+      <div class="navbar-server" onclick="copyToClipboard('Play.Voidedmc.net')">
+        Official MC Server: Play.Voidedmc.net
+      </div>
+
       <div class="navbar-links" id="nav-links">
         <a href="#home">Home</a>
         <a href="#about">About Us</a>
@@ -480,6 +509,12 @@
 </footer>
   <!-- Scripts -->
   <script>
+    function copyToClipboard(text) {
+      navigator.clipboard.writeText(text).then(() => {
+        alert('Server IP copied: ' + text);
+      });
+    }
+
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {

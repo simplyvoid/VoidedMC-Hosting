@@ -10,19 +10,22 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
     :root {
-      --primary: #d8b4fe;
-      --primary-dark: #c084fc;
-      --secondary: #f8bbd9;
-      --background: #1a1625;
-      --surface: rgba(45, 35, 55, 0.95);
-      --surface-light: rgba(60, 50, 70, 0.9);
-      --text: #ffffff;
-      --text-muted: #d1c7d8;
-      --accent: #fbbf24;
-      --border: rgba(255, 255, 255, 0.15);
-      --glow: rgba(216, 180, 254, 0.4);
-      --success: #34d399;
+      --primary: #C084FC;
+      --primary-dark: #A78BFA;
+      --secondary: #F9A8D4;
+      --background: #1E1B2E;
+      --surface: rgba(42, 38, 58, 0.95);
+      --surface-light: rgba(42, 38, 58, 0.9);
+      --text: #CCCCCC;
+      --text-muted: #CCCCCC;
+      --text-highlight: #DDBEFF;
+      --accent: #C084FC;
+      --border: rgba(221, 190, 255, 0.1);
+      --glow: rgba(192, 132, 252, 0.3);
+      --success: #10b981;
       --gradient: linear-gradient(135deg, var(--primary), var(--secondary));
+      --icon-pink: #F9A8D4;
+      --icon-purple: #A78BFA;
     }
 
     * {
@@ -69,22 +72,22 @@
 
     .particle:nth-child(1) { left: 10%; animation-delay: 0s; background: var(--primary); }
     .particle:nth-child(2) { left: 20%; animation-delay: 2s; background: var(--secondary); }
-    .particle:nth-child(3) { left: 30%; animation-delay: 4s; background: var(--accent); }
+    .particle:nth-child(3) { left: 30%; animation-delay: 4s; background: var(--icon-pink); }
     .particle:nth-child(4) { left: 40%; animation-delay: 6s; background: var(--primary); }
-    .particle:nth-child(5) { left: 50%; animation-delay: 8s; background: var(--secondary); }
+    .particle:nth-child(5) { left: 50%; animation-delay: 8s; background: var(--icon-purple); }
     .particle:nth-child(6) { left: 60%; animation-delay: 10s; background: var(--primary); }
-    .particle:nth-child(7) { left: 70%; animation-delay: 12s; background: var(--accent); }
-    .particle:nth-child(8) { left: 80%; animation-delay: 14s; background: var(--secondary); }
+    .particle:nth-child(7) { left: 70%; animation-delay: 12s; background: var(--secondary); }
+    .particle:nth-child(8) { left: 80%; animation-delay: 14s; background: var(--icon-pink); }
     .particle:nth-child(9) { left: 90%; animation-delay: 16s; background: var(--primary); }
-    .particle:nth-child(10) { left: 15%; animation-delay: 18s; background: var(--accent); }
+    .particle:nth-child(10) { left: 15%; animation-delay: 18s; background: var(--icon-purple); }
     .particle:nth-child(11) { left: 25%; animation-delay: 20s; background: var(--primary); }
     .particle:nth-child(12) { left: 35%; animation-delay: 22s; background: var(--secondary); }
     .particle:nth-child(13) { left: 45%; animation-delay: 24s; background: var(--primary); }
-    .particle:nth-child(14) { left: 55%; animation-delay: 26s; background: var(--accent); }
-    .particle:nth-child(15) { left: 65%; animation-delay: 28s; background: var(--secondary); }
+    .particle:nth-child(14) { left: 55%; animation-delay: 26s; background: var(--icon-pink); }
+    .particle:nth-child(15) { left: 65%; animation-delay: 28s; background: var(--icon-purple); }
     .particle:nth-child(16) { left: 75%; animation-delay: 30s; background: var(--primary); }
-    .particle:nth-child(17) { left: 85%; animation-delay: 32s; background: var(--accent); }
-    .particle:nth-child(18) { left: 95%; animation-delay: 34s; background: var(--secondary); }
+    .particle:nth-child(17) { left: 85%; animation-delay: 32s; background: var(--secondary); }
+    .particle:nth-child(18) { left: 95%; animation-delay: 34s; background: var(--icon-pink); }
 
     @keyframes float {
       0% {
@@ -111,9 +114,9 @@
       width: 100%;
       height: 100%;
       background: 
-        radial-gradient(circle at 20% 80%, rgba(216, 180, 254, 0.08) 0%, transparent 50%),
-        radial-gradient(circle at 80% 20%, rgba(248, 187, 217, 0.08) 0%, transparent 50%),
-        radial-gradient(circle at 40% 40%, rgba(251, 191, 36, 0.05) 0%, transparent 50%);
+        radial-gradient(circle at 20% 80%, rgba(192, 132, 252, 0.05) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(249, 168, 212, 0.05) 0%, transparent 50%),
+        radial-gradient(circle at 40% 40%, rgba(167, 139, 250, 0.03) 0%, transparent 50%);
       z-index: -3;
     }
 
@@ -132,7 +135,7 @@
 
     .navbar.scrolled {
       padding: 0.75rem 0;
-      background: rgba(45, 35, 55, 0.98);
+      background: rgba(42, 38, 58, 0.98);
     }
 
     .navbar-container {
@@ -168,6 +171,7 @@
       cursor: pointer;
       transition: all 0.3s ease;
       backdrop-filter: blur(10px);
+      color: var(--text-highlight);
     }
 
     .navbar-server:hover {
@@ -188,7 +192,7 @@
     }
 
     .navbar-links a {
-      color: var(--text-muted);
+      color: var(--text);
       text-decoration: none;
       font-weight: 500;
       font-size: 0.875rem;
@@ -210,7 +214,7 @@
     }
 
     .navbar-links a:hover {
-      color: var(--text);
+      color: var(--text-highlight);
     }
 
     .navbar-links a:hover::after {
@@ -249,7 +253,7 @@
       width: 120%;
       height: 120%;
       object-fit: cover;
-      opacity: 0.4;
+      opacity: 0.3;
       z-index: -1;
       transform: translate(-50%, -50%);
       will-change: transform;
@@ -258,7 +262,7 @@
     .hero-overlay {
       position: absolute;
       inset: 0;
-      background: rgba(26, 22, 37, 0.5);
+      background: rgba(30, 27, 46, 0.6);
       z-index: 0;
     }
 
@@ -293,6 +297,7 @@
       font-weight: 500;
       margin-bottom: 2rem;
       backdrop-filter: blur(20px);
+      color: var(--text-highlight);
     }
 
     .hero-badge::before {
@@ -314,12 +319,12 @@
       font-size: clamp(1.5rem, 3vw, 2.25rem);
       font-weight: 600;
       margin-bottom: 1rem;
-      color: var(--success);
+      color: var(--text-highlight);
     }
 
     .hero p {
       font-size: 1.25rem;
-      color: var(--text-muted);
+      color: var(--text);
       margin-bottom: 2.5rem;
       line-height: 1.6;
     }
@@ -359,7 +364,7 @@
 
     .cta-button:hover {
       transform: translateY(-2px);
-      box-shadow: 0 10px 30px rgba(216, 180, 254, 0.4);
+      box-shadow: 0 10px 30px rgba(192, 132, 252, 0.4);
     }
 
     /* Scroll Indicator */
@@ -380,7 +385,7 @@
 
     .scroll-indicator span {
       font-size: 0.875rem;
-      color: var(--text-muted);
+      color: var(--text);
       font-weight: 500;
     }
 
@@ -412,14 +417,6 @@
     .features-header {
       text-align: center;
       margin-bottom: 4rem;
-      opacity: 0;
-      transform: translateY(30px);
-      transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-
-    .features-header.animate {
-      opacity: 1;
-      transform: translateY(0);
     }
 
     .features-header h2 {
@@ -434,7 +431,7 @@
 
     .features-header p {
       font-size: 1.125rem;
-      color: var(--text-muted);
+      color: var(--text);
       max-width: 600px;
       margin: 0 auto;
     }
@@ -453,13 +450,6 @@
       text-align: center;
       transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
       backdrop-filter: blur(20px);
-      opacity: 0;
-      transform: translateY(30px);
-    }
-
-    .feature.animate {
-      opacity: 1;
-      transform: translateY(0);
     }
 
     .feature:hover {
@@ -484,11 +474,11 @@
       font-size: 1.5rem;
       font-weight: 600;
       margin-bottom: 1rem;
-      color: var(--text);
+      color: var(--text-highlight);
     }
 
     .feature p {
-      color: var(--text-muted);
+      color: var(--text);
       line-height: 1.6;
     }
 
@@ -506,14 +496,6 @@
     .about-header {
       text-align: center;
       margin-bottom: 4rem;
-      opacity: 0;
-      transform: translateY(30px);
-      transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-
-    .about-header.animate {
-      opacity: 1;
-      transform: translateY(0);
     }
 
     .about-header h2 {
@@ -534,14 +516,6 @@
       backdrop-filter: blur(20px);
       overflow: hidden;
       transition: all 0.3s ease;
-      opacity: 0;
-      transform: translateY(30px);
-    }
-
-    .about-section.animate {
-      opacity: 1;
-      transform: translateY(0);
-      transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
     .about-section:hover {
@@ -551,7 +525,7 @@
     .about-section h3 {
       font-size: 1.5rem;
       font-weight: 600;
-      color: var(--text);
+      color: var(--text-highlight);
       padding: 2rem 2rem 0;
       cursor: pointer;
       display: flex;
@@ -569,7 +543,7 @@
     }
 
     .about-section p {
-      color: var(--text-muted);
+      color: var(--text);
       line-height: 1.6;
       margin-bottom: 1rem;
     }
@@ -619,7 +593,7 @@
       padding: 0.5rem 0;
       padding-left: 1.5rem;
       position: relative;
-      color: var(--text-muted);
+      color: var(--text);
     }
 
     .specs-section li::before {
@@ -628,6 +602,14 @@
       left: 0;
       color: var(--primary);
       font-weight: bold;
+    }
+
+    .specs-section p strong {
+      color: var(--icon-pink);
+    }
+
+    .specs-section p strong[style*="accent"] {
+      color: var(--icon-purple);
     }
 
     /* Footer */
@@ -652,7 +634,7 @@
     }
 
     .footer-links a {
-      color: var(--text-muted);
+      color: var(--text);
       text-decoration: none;
       font-size: 0.875rem;
       transition: color 0.3s ease;
@@ -663,7 +645,7 @@
     }
 
     .footer-copyright {
-      color: var(--text-muted);
+      color: var(--text);
       font-size: 0.875rem;
       line-height: 1.6;
     }
@@ -678,6 +660,10 @@
         opacity: 1;
         transform: translateY(0);
       }
+    }
+
+    .animate {
+      animation: fadeInUp 0.8s ease-out forwards;
     }
 
     /* Responsive Design */
@@ -925,7 +911,7 @@
             <div class="specs-section">
               <h4>Free Tier - Dell R720</h4>
               
-              <p><strong style="color: var(--secondary);">Processors:</strong></p>
+              <p><strong style="color: var(--icon-pink);">Processors:</strong></p>
               <ul>
                 <li>Dual Intel E5-2690</li>
                 <li>8 cores / 16 threads per CPU (Total: 16 cores / 32 threads)</li>
@@ -933,20 +919,20 @@
                 <li>Max Turbo Frequency: Up to 3.8 GHz</li>
               </ul>
 
-              <p><strong style="color: var(--secondary);">Memory:</strong></p>
+              <p><strong style="color: var(--icon-pink);">Memory:</strong></p>
               <ul>
                 <li>Total RAM: 196 GB DDR3 ECC Registered</li>
                 <li>RAM Speed: 2300 MHz</li>
               </ul>
 
-              <p><strong style="color: var(--secondary);">Storage:</strong></p>
+              <p><strong style="color: var(--icon-pink);">Storage:</strong></p>
               <ul>
                 <li>RAID 5 – SSD Configuration</li>
               </ul>
 
               <h4>Paid Tier – Custom High-Performance Nodes</h4>
 
-              <p><strong style="color: var(--accent);">Processors:</strong></p>
+              <p><strong style="color: var(--icon-purple);">Processors:</strong></p>
               <ul>
                 <li>Intel i9-9900k</li>
                 <li>8 cores / 16 threads</li>
@@ -962,13 +948,13 @@
                 <li>Max Boost Clock: Up to 5.3 GHz</li>
               </ul>
 
-              <p><strong style="color: var(--accent);">Memory:</strong></p>
+              <p><strong style="color: var(--icon-purple);">Memory:</strong></p>
               <ul>
                 <li>Total RAM: 64 GB DDR4</li>
                 <li>RAM Speed: 3200 MHz</li>
               </ul>
 
-              <p><strong style="color: var(--accent);">Storage:</strong></p>
+              <p><strong style="color: var(--icon-purple);">Storage:</strong></p>
               <ul>
                 <li>Gen 4 NVMe SSDs for maximum performance</li>
               </ul>
@@ -1085,42 +1071,23 @@
       });
     });
 
-    // Enhanced Intersection Observer for smooth animations
+    // Intersection Observer for animations
     const observerOptions = {
       threshold: 0.1,
       rootMargin: '0px 0px -50px 0px'
     };
 
     const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry, index) => {
+      entries.forEach(entry => {
         if (entry.isIntersecting) {
-          // Add staggered delay for feature cards
-          if (entry.target.classList.contains('feature')) {
-            const features = document.querySelectorAll('.feature');
-            const featureIndex = Array.from(features).indexOf(entry.target);
-            setTimeout(() => {
-              entry.target.classList.add('animate');
-            }, featureIndex * 150); // 150ms delay between each feature
-          } 
-          // Add staggered delay for about sections
-          else if (entry.target.classList.contains('about-section')) {
-            const aboutSections = document.querySelectorAll('.about-section');
-            const sectionIndex = Array.from(aboutSections).indexOf(entry.target);
-            setTimeout(() => {
-              entry.target.classList.add('animate');
-            }, sectionIndex * 200); // 200ms delay between each section
-          } 
-          // Immediate animation for headers
-          else {
-            entry.target.classList.add('animate');
-          }
+          entry.target.classList.add('animate');
           observer.unobserve(entry.target); // Only animate once
         }
       });
     }, observerOptions);
 
     // Observe elements for animation
-    document.querySelectorAll('.features-header, .feature, .about-header, .about-section').forEach(el => {
+    document.querySelectorAll('.feature, .about-section').forEach(el => {
       observer.observe(el);
     });
 

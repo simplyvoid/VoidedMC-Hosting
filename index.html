@@ -244,13 +244,15 @@
 
     .hero-bg {
       position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
+      top: 50%;
+      left: 50%;
+      width: 120%;
+      height: 120%;
       object-fit: cover;
       opacity: 0.3;
       z-index: -1;
+      transform: translate(-50%, -50%);
+      will-change: transform;
     }
 
     .hero-overlay {
@@ -1076,7 +1078,7 @@
       observer.observe(el);
     });
 
-    // Parallax effect for hero background (optional, lightweight)
+    // Fixed parallax effect for hero background
     const heroBackground = document.querySelector('.hero-bg');
     if (heroBackground) {
       window.addEventListener('scroll', () => {

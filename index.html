@@ -7,55 +7,114 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>VoidedMC Hosting - Free Minecraft Server Hosting</title>
   <link rel="icon" type="image/png" href="server-icon.png">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
     :root {
-      --primary: #9b5de5;
-      --background: #0e0e0e;
-      --text: #f1f1f1;
-      --highlight: #6a0dad;
-      --card: #1e1e1e;
+      --primary: #8b5cf6;
+      --primary-dark: #7c3aed;
+      --secondary: #06b6d4;
+      --background: #0a0a0a;
+      --surface: rgba(17, 17, 17, 0.95);
+      --surface-light: rgba(30, 30, 30, 0.9);
+      --text: #ffffff;
+      --text-muted: #a1a1aa;
+      --accent: #f59e0b;
+      --border: rgba(255, 255, 255, 0.1);
+      --glow: rgba(139, 92, 246, 0.3);
+      --success: #10b981;
+      --gradient: linear-gradient(135deg, var(--primary), var(--secondary));
     }
 
     * {
-      box-sizing: border-box;
       margin: 0;
       padding: 0;
-      font-family: 'Inter', sans-serif;
+      box-sizing: border-box;
     }
 
     html {
       scroll-behavior: smooth;
+      font-size: 16px;
     }
 
     body {
-      background-color: var(--background);
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--background);
       color: var(--text);
       overflow-x: hidden;
-      position: relative;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
     }
 
-    /* Fullscreen video overlay */
-    #portal-overlay {
+    /* Minecraft-inspired Background Effects */
+    .background-particles {
       position: fixed;
-      inset: 0;
-      background: rgba(0, 0, 0, 0.85);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      z-index: 9999;
-      opacity: 0;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      z-index: -2;
       pointer-events: none;
-      transition: opacity 0.6s ease;
     }
-    #portal-overlay.active {
-      opacity: 1;
-      pointer-events: auto;
+
+    .particle {
+      position: absolute;
+      width: 6px;
+      height: 6px;
+      background: var(--primary);
+      opacity: 0.6;
+      animation: float 15s infinite linear;
     }
-    #portal-video {
-      max-width: 100%;
-      max-height: 100%;
-      border-radius: 18px;
-      box-shadow: 0 0 26px #6a0dad;
+
+    .particle:nth-child(1) { left: 10%; animation-delay: 0s; background: var(--primary); }
+    .particle:nth-child(2) { left: 20%; animation-delay: 2s; background: var(--secondary); }
+    .particle:nth-child(3) { left: 30%; animation-delay: 4s; background: var(--accent); }
+    .particle:nth-child(4) { left: 40%; animation-delay: 6s; background: var(--primary); }
+    .particle:nth-child(5) { left: 50%; animation-delay: 8s; background: var(--secondary); }
+    .particle:nth-child(6) { left: 60%; animation-delay: 10s; background: var(--primary); }
+    .particle:nth-child(7) { left: 70%; animation-delay: 12s; background: var(--accent); }
+    .particle:nth-child(8) { left: 80%; animation-delay: 14s; background: var(--secondary); }
+    .particle:nth-child(9) { left: 90%; animation-delay: 16s; background: var(--primary); }
+    .particle:nth-child(10) { left: 15%; animation-delay: 18s; background: var(--accent); }
+    .particle:nth-child(11) { left: 25%; animation-delay: 20s; background: var(--primary); }
+    .particle:nth-child(12) { left: 35%; animation-delay: 22s; background: var(--secondary); }
+    .particle:nth-child(13) { left: 45%; animation-delay: 24s; background: var(--primary); }
+    .particle:nth-child(14) { left: 55%; animation-delay: 26s; background: var(--accent); }
+    .particle:nth-child(15) { left: 65%; animation-delay: 28s; background: var(--secondary); }
+    .particle:nth-child(16) { left: 75%; animation-delay: 30s; background: var(--primary); }
+    .particle:nth-child(17) { left: 85%; animation-delay: 32s; background: var(--accent); }
+    .particle:nth-child(18) { left: 95%; animation-delay: 34s; background: var(--secondary); }
+
+    @keyframes float {
+      0% {
+        transform: translateY(100vh) rotate(0deg);
+        opacity: 0;
+      }
+      10% {
+        opacity: 0.6;
+      }
+      90% {
+        opacity: 0.6;
+      }
+      100% {
+        transform: translateY(-100px) rotate(360deg);
+        opacity: 0;
+      }
+    }
+
+    /* Subtle ambient glow effect */
+    .background-ambient {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: 
+        radial-gradient(circle at 20% 80%, rgba(139, 92, 246, 0.05) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(6, 182, 212, 0.05) 0%, transparent 50%),
+        radial-gradient(circle at 40% 40%, rgba(245, 158, 11, 0.03) 0%, transparent 50%);
+      z-index: -3;
     }
 
     /* Modern Navbar */
@@ -63,519 +122,892 @@
       position: fixed;
       top: 0;
       width: 100%;
-      background: rgba(30, 30, 30, 0.95);
-      backdrop-filter: blur(10px);
-      padding: 0.5rem 2rem;
+      background: var(--surface);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+      padding: 1rem 0;
       z-index: 1000;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.3);
-      transition: background 0.3s ease, padding 0.3s ease;
-      transform: translateY(-100%);
-      opacity: 0;
-      animation: slideInNav 0.8s ease forwards;
-    }
-
-    @keyframes slideInNav {
-      0% {
-        transform: translateY(-100%);
-        opacity: 0;
-      }
-      100% {
-        transform: translateY(0);
-        opacity: 1;
-      }
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
     .navbar.scrolled {
-      background: rgba(20, 20, 20, 0.98);
-      padding: 0.25rem 2rem;
+      padding: 0.75rem 0;
+      background: rgba(17, 17, 17, 0.98);
     }
 
     .navbar-container {
       max-width: 1200px;
-      width: 100%;
+      margin: 0 auto;
+      padding: 0 2rem;
       display: flex;
       justify-content: space-between;
       align-items: center;
     }
 
     .navbar-logo a {
-      font-size: 1.8rem;
-      font-weight: 700;
-      color: #C084FC;
+      font-size: 1.75rem;
+      font-weight: 800;
+      background: var(--gradient);
+      background-clip: text;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
       text-decoration: none;
-      transition: color 0.3s;
+      transition: all 0.3s ease;
     }
-    .navbar-logo a:hover {
-      color: #fff;
+
+    .navbar-server {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: var(--surface-light);
+      border: 1px solid var(--border);
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+      font-size: 0.875rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      backdrop-filter: blur(10px);
+    }
+
+    .navbar-server:hover {
+      border-color: var(--primary);
+      background: var(--surface);
+      transform: translateY(-1px);
+    }
+
+    .navbar-server::before {
+      content: "🎮";
+      font-size: 1rem;
     }
 
     .navbar-links {
       display: flex;
       gap: 2rem;
       align-items: center;
-      transition: transform 0.3s ease, opacity 0.3s ease;
     }
 
     .navbar-links a {
-      color: #C084FC;
+      color: var(--text-muted);
       text-decoration: none;
-      font-weight: 600;
+      font-weight: 500;
+      font-size: 0.875rem;
+      padding: 0.5rem 0;
       position: relative;
-      padding: 0.3rem 0;
       transition: color 0.3s ease;
     }
 
     .navbar-links a::after {
       content: "";
       position: absolute;
-      width: 100%;
+      width: 0;
       height: 2px;
-      background: #C084FC;
-      left: 0;
+      background: var(--gradient);
+      left: 50%;
       bottom: 0;
-      transform: scaleX(0);
-      transform-origin: right;
-      transition: transform 0.3s ease;
-    }
-
-    .navbar-links a:hover::after {
-      transform: scaleX(1);
-      transform-origin: left;
+      transform: translateX(-50%);
+      transition: width 0.3s ease;
     }
 
     .navbar-links a:hover {
-      color: #fff;
+      color: var(--text);
     }
 
-    .navbar-server {
-      margin-right: 2rem;
-      color: #C084FC;
-      font-weight: 600;
-      cursor: pointer;
-      transition: color 0.3s;
+    .navbar-links a:hover::after {
+      width: 100%;
     }
-    .navbar-server:hover { color: #ffffff; }
 
     .navbar-toggle {
       display: none;
-      font-size: 1.8rem;
-      color: #C084FC;
+      background: none;
+      border: none;
+      color: var(--text);
+      font-size: 1.5rem;
       cursor: pointer;
-      transition: transform 0.3s ease;
-    }
-    .navbar-toggle:hover {
-      transform: rotate(90deg);
+      padding: 0.5rem;
+      border-radius: 8px;
+      transition: background 0.3s ease;
     }
 
+    .navbar-toggle:hover {
+      background: var(--surface-light);
+    }
+
+    /* Hero Section */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-bg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0.3;
+      z-index: -1;
+    }
+
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(10, 10, 10, 0.6);
+      z-index: 0;
+    }
+
+    .hero-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem;
+      position: relative;
+      z-index: 1;
+      display: flex;
+      align-items: center;
+      min-height: 100vh;
+      width: 100%;
+    }
+
+    .hero-content {
+      max-width: 550px;
+      animation: fadeInUp 1s ease-out;
+      text-align: left;
+      margin-right: auto;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      padding: 0.5rem 1rem;
+      font-size: 0.875rem;
+      font-weight: 500;
+      margin-bottom: 2rem;
+      backdrop-filter: blur(20px);
+    }
+
+    .hero-badge::before {
+      content: "🎯";
+    }
+
+    .hero h1 {
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      font-weight: 800;
+      margin-bottom: 1.5rem;
+      background: var(--gradient);
+      background-clip: text;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      line-height: 1.1;
+    }
+
+    .hero h2 {
+      font-size: clamp(1.5rem, 3vw, 2.25rem);
+      font-weight: 600;
+      margin-bottom: 1rem;
+      color: var(--success);
+    }
+
+    .hero p {
+      font-size: 1.25rem;
+      color: var(--text-muted);
+      margin-bottom: 2.5rem;
+      line-height: 1.6;
+    }
+
+    .cta-button {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: var(--gradient);
+      color: white;
+      padding: 1rem 2rem;
+      border: none;
+      border-radius: 12px;
+      font-size: 1.125rem;
+      font-weight: 600;
+      text-decoration: none;
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cta-button::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+      transition: left 0.5s;
+    }
+
+    .cta-button:hover::before {
+      left: 100%;
+    }
+
+    .cta-button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 30px rgba(139, 92, 246, 0.4);
+    }
+
+    /* Scroll Indicator */
+    .scroll-indicator {
+      position: absolute;
+      bottom: 3rem;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1rem;
+      cursor: pointer;
+      animation: bounce 2s infinite;
+      text-decoration: none;
+      z-index: 10;
+    }
+
+    .scroll-indicator span {
+      font-size: 0.875rem;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+
+    .scroll-indicator::after {
+      content: "↓";
+      font-size: 1.5rem;
+      color: var(--primary);
+    }
+
+    @keyframes bounce {
+      0%, 20%, 50%, 80%, 100% { transform: translateX(-50%) translateY(0); }
+      40% { transform: translateX(-50%) translateY(-10px); }
+      60% { transform: translateX(-50%) translateY(-5px); }
+    }
+
+    /* Features Section */
+    .features {
+      padding: 6rem 2rem;
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+      position: relative;
+    }
+
+    .features-container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .features-header {
+      text-align: center;
+      margin-bottom: 4rem;
+    }
+
+    .features-header h2 {
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      background: var(--gradient);
+      background-clip: text;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .features-header p {
+      font-size: 1.125rem;
+      color: var(--text-muted);
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+    }
+
+    .feature {
+      background: var(--surface-light);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 2rem;
+      text-align: center;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      backdrop-filter: blur(20px);
+    }
+
+    .feature:hover {
+      transform: translateY(-8px);
+      border-color: var(--primary);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    }
+
+    .feature-icon {
+      width: 64px;
+      height: 64px;
+      margin: 0 auto 1.5rem;
+      background: var(--gradient);
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+    }
+
+    .feature h3 {
+      font-size: 1.5rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+      color: var(--text);
+    }
+
+    .feature p {
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    /* About Section */
+    .about {
+      padding: 6rem 2rem;
+      background: var(--background);
+    }
+
+    .about-container {
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .about-header {
+      text-align: center;
+      margin-bottom: 4rem;
+    }
+
+    .about-header h2 {
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      background: var(--gradient);
+      background-clip: text;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .about-section {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      margin-bottom: 2rem;
+      backdrop-filter: blur(20px);
+      overflow: hidden;
+      transition: all 0.3s ease;
+    }
+
+    .about-section:hover {
+      border-color: var(--primary);
+    }
+
+    .about-section h3 {
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: var(--text);
+      padding: 2rem 2rem 0;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: color 0.3s ease;
+    }
+
+    .about-section h3:hover {
+      color: var(--primary);
+    }
+
+    .about-section .content {
+      padding: 1rem 2rem 2rem;
+    }
+
+    .about-section p {
+      color: var(--text-muted);
+      line-height: 1.6;
+      margin-bottom: 1rem;
+    }
+
+    .about-section p:last-child {
+      margin-bottom: 0;
+    }
+
+    /* Dropdown functionality */
+    .dropdown-content {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .dropdown-content.open {
+      max-height: 2000px;
+    }
+
+    .arrow {
+      font-size: 1rem;
+      transition: transform 0.3s ease;
+    }
+
+    .arrow.rotate {
+      transform: rotate(180deg);
+    }
+
+    /* Hardware specs styling */
+    .specs-section {
+      margin: 2rem 0;
+    }
+
+    .specs-section h4 {
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: var(--primary);
+      margin: 1.5rem 0 1rem;
+    }
+
+    .specs-section ul {
+      list-style: none;
+      margin: 1rem 0;
+    }
+
+    .specs-section li {
+      padding: 0.5rem 0;
+      padding-left: 1.5rem;
+      position: relative;
+      color: var(--text-muted);
+    }
+
+    .specs-section li::before {
+      content: "•";
+      position: absolute;
+      left: 0;
+      color: var(--primary);
+      font-weight: bold;
+    }
+
+    /* Footer */
+    .footer {
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+      padding: 3rem 2rem 2rem;
+      text-align: center;
+    }
+
+    .footer-content {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      margin-bottom: 2rem;
+      flex-wrap: wrap;
+    }
+
+    .footer-links a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.875rem;
+      transition: color 0.3s ease;
+    }
+
+    .footer-links a:hover {
+      color: var(--primary);
+    }
+
+    .footer-copyright {
+      color: var(--text-muted);
+      font-size: 0.875rem;
+      line-height: 1.6;
+    }
+
+    /* Animations */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .animate {
+      animation: fadeInUp 0.8s ease-out forwards;
+    }
+
+    /* Responsive Design */
     @media (max-width: 768px) {
+      .navbar-container {
+        padding: 0 1rem;
+      }
+
+      .navbar-server {
+        display: none;
+      }
+
       .navbar-links {
         position: absolute;
-        top: 70px;
-        right: 2rem;
-        background: rgba(30,30,30,0.95);
+        top: 100%;
+        left: 1rem;
+        right: 1rem;
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 12px;
         flex-direction: column;
-        gap: 1.5rem;
-        padding: 1.5rem;
-        border-radius: 10px;
+        gap: 0;
+        padding: 1rem 0;
         transform: translateY(-20px);
         opacity: 0;
         pointer-events: none;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
       }
+
       .navbar-links.show {
         transform: translateY(0);
         opacity: 1;
         pointer-events: auto;
       }
+
+      .navbar-links a {
+        padding: 1rem;
+        border-bottom: 1px solid var(--border);
+      }
+
+      .navbar-links a:last-child {
+        border-bottom: none;
+      }
+
       .navbar-toggle {
         display: block;
       }
-    }
 
-    header {
-      position: relative;
-      height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 2rem;
-      color: #fff;
-      overflow: hidden;
-      text-align: left;
-    }
-    header img.header-bg {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      z-index: -1;
-    }
-    .header-flex-container {
-      position: relative;
-      z-index: 1;
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-between;
-      align-items: flex-start;
-      max-width: 1200px;
-      width: 100%;
-      padding: 2rem;
-    }
-    .header-left {
-      flex: 1 1 50%;
-      padding-right: 2rem;
-    }
-    .header-left h1,
-    .header-left h2,
-    .header-left p,
-    .header-left .cta-button {
-      opacity: 0;
-      transform: translateY(30px);
-      animation: fadeInUpHeader 0.8s ease forwards;
-    }
-    .header-left h1 { animation-delay: 0.3s; }
-    .header-left h2 { animation-delay: 0.6s; }
-    .header-left p { animation-delay: 0.9s; }
-    .header-left .cta-button { animation-delay: 1.2s; }
-
-    @keyframes fadeInUpHeader {
-      0% {
-        opacity: 0;
-        transform: translateY(30px);
+      .hero-container {
+        padding: 1rem;
       }
-      100% {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
 
-    .header-left h1 {
-      font-size: 3.5rem;
-      color: #C084FC;
-      margin-bottom: 1rem;
-    }
-    .header-left h2 {
-      font-size: 2rem;
-      margin-bottom: 1rem;
-    }
-    .header-left p {
-      font-size: 1.2rem;
-      line-height: 1.6;
-      margin-bottom: 2rem;
-    }
-    .cta-button {
-      background-color: #B57EDC;
-      color: white;
-      padding: 1rem 2rem;
-      border: none;
-      border-radius: 8px;
-      font-size: 1rem;
-      cursor: pointer;
-      transition: background 0.3s, transform 0.3s;
-      display: inline-block;
-      text-decoration: none;
-    }
-    .cta-button:hover {
-      background-color: #4b0a9b;
-      transform: scale(1.05);
-    }
-
-    /* Down Arrow */
-    .down-arrow {
-      position: absolute;
-      bottom: 20px;
-      left: 50%;
-      transform: translateX(-50%);
-      cursor: pointer;
-      animation: bounce 1.5s infinite;
-      transition: transform 0.3s ease;
-    }
-    .down-arrow svg {
-      width: 40px;
-      height: 40px;
-      fill: white;
-      transition: filter 0.3s ease, transform 0.3s ease;
-    }
-    .down-arrow:hover svg {
-      filter: drop-shadow(0 0 10px #9b5de5);
-      transform: scale(1.2);
-    }
-    @keyframes bounce {
-      0%, 20%, 50%, 80%, 100% { transform: translate(-50%, 0); }
-      40% { transform: translate(-50%, -10px); }
-      60% { transform: translate(-50%, -5px); }
-    }
-
-    .features {
-      display: flex;
-      justify-content: center;
-      gap: 2rem;
-      margin: 4rem auto;
-      max-width: 1000px;
-      text-align: center;
-    }
-    .feature {
-      background: var(--card);
-      padding: 2rem;
-      border-radius: 10px;
-      flex: 1;
-      transition: transform 0.3s, box-shadow 0.3s;
-    }
-    .feature:hover {
-      transform: translateY(-10px);
-      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
-    }
-    .feature-icon {
-      font-size: 2rem;
-      margin-bottom: 1rem;
-      color: var(--highlight);
-    }
-
-    .about {
-      padding: 4rem 2rem;
-      max-width: 900px;
-      margin: 0 auto;
-    }
-    .about h2 {
-      font-size: 2.5rem;
-      text-align: center;
-      margin-bottom: 2rem;
-      color: #C084FC;
-    }
-    .about-section {
-      background-color: var(--card);
-      padding: 2rem;
-      border-radius: 10px;
-      margin-bottom: 2rem;
-      opacity: 0;
-      transform: translateY(20px);
-      transition: opacity 0.6s ease, transform 0.6s ease;
-    }
-    .about-section h3 {
-      font-size: 1.8rem;
-      color: #c77dff;
-      margin-bottom: 1rem;
-      cursor: pointer;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-    .about-section p {
-      font-size: 1rem;
-      line-height: 1.6;
-      color: #ddd;
-    }
-
-    /* Dropdown styles */
-    .dropdown-content {
-      max-height: 0;
-      overflow: hidden;
-      transition: max-height 0.5s ease;
-    }
-    .dropdown-content.open {
-      max-height: 2000px;
-    }
-    .arrow {
-      display: inline-block;
-      transition: transform 0.3s ease;
-    }
-    .arrow.rotate {
-      transform: rotate(180deg);
-    }
-
-    footer a {
-      color: #9b5de5;
-      text-decoration: none;
-    }
-    footer a:hover {
-      text-decoration: underline;
-    }
-    footer {
-      text-align: center;
-      padding: 2rem 1rem;
-      background: var(--card);
-      color: #aaa;
-    }
-
-    @keyframes fadeInUp {
-      0% {
-        opacity: 0;
-        transform: translateY(20px);
-      }
-      100% {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-    .animate {
-      animation: fadeInUp 0.6s ease forwards;
-    }
-
-    @media (max-width: 768px) {
-      .header-flex-container {
-        flex-direction: column;
+      .hero-content {
         text-align: center;
+        max-width: 100%;
       }
-      .header-left, .header-right {
-        flex: 1 1 100%;
-        padding: 0;
+
+      .features {
+        padding: 4rem 1rem;
       }
-      .header-right {
-        margin-top: 2rem;
+
+      .features-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
       }
+
+      .about {
+        padding: 4rem 1rem;
+      }
+
+      .about-section h3,
+      .about-section .content {
+        padding-left: 1.5rem;
+        padding-right: 1.5rem;
+      }
+
+      .footer {
+        padding: 2rem 1rem;
+      }
+
+      .footer-links {
+        flex-direction: column;
+        gap: 1rem;
+      }
+    }
+
+    /* Performance optimizations */
+    .navbar,
+    .hero,
+    .features,
+    .about,
+    .footer {
+      will-change: auto;
+    }
+
+    /* Ad container styling */
+    .ad-container {
+      margin: 2rem auto;
+      max-width: 1200px;
+      padding: 0 2rem;
     }
   </style>
 </head>
 <body>
+  <div class="background-ambient"></div>
+  <div class="background-particles">
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+  </div>
 
+  <!-- Navigation -->
   <nav class="navbar" id="navbar">
     <div class="navbar-container">
-      <div class="navbar-logo"><a href="#home">VoidedMC</a></div>
-      <div class="navbar-server" onclick="copyToClipboard('Play.Voidedmc.net')">Official MC Server: Play.Voidedmc.net</div>
+      <div class="navbar-logo">
+        <a href="#home">VoidedMC</a>
+      </div>
+      <div class="navbar-server" onclick="copyToClipboard('Play.Voidedmc.net')" title="Click to copy server IP">
+        Play.Voidedmc.net
+      </div>
       <div class="navbar-links" id="nav-links">
         <a href="#home">Home</a>
-        <a href="#about">About Us</a>
+        <a href="#features">Features</a>
+        <a href="#about">About</a>
         <a href="https://adminconsole.voidedmc.net">Login</a>
       </div>
-      <div class="navbar-toggle" id="nav-toggle">☰</div>
+      <button class="navbar-toggle" id="nav-toggle" aria-label="Toggle navigation">
+        ☰
+      </button>
     </div>
   </nav>
 
-  <div id="home"></div>
+  <!-- Hero Section -->
+  <section class="hero" id="home">
+    <img src="serverimage.png" alt="Minecraft Server Background" class="hero-bg" loading="lazy" />
+    <div class="hero-overlay"></div>
+    <div class="hero-container">
+      <div class="hero-content">
 
-  <header>
-    <img src="serverimage.png" alt="Background" class="header-bg" />
-    <div class="header-flex-container">
-      <div class="header-left">
         <h1>VoidedMC Hosting</h1>
-        <h2>100% Free Hosting.</h2>
-        <p>We're not lying... Boot your FREE Minecraft server in a matter of minutes! No catch, no credit card.</p>
-        <a href="plans.html" class="cta-button" id="start-btn">Get Started Now</a>
+        <h2>100% Free Hosting</h2>
+        <p>We're not lying... Boot your FREE Minecraft server in a matter of minutes! No catch, no credit card required.</p>
+        <a href="plans.html" class="cta-button">
+          Get Started Now →
+        </a>
       </div>
     </div>
-    <!-- Down Arrow -->
-    <a href="#about" class="down-arrow">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-        <path d="M12 16l-6-6h12z"/>
-      </svg>
+    <a href="#features" class="scroll-indicator">
+      <span>Scroll to explore</span>
     </a>
-  </header>
+  </section>
 
   <!-- Features Section -->
   <section class="features" id="features">
-    <div class="feature">
-      <div class="feature-icon">🔓</div>
-      <h3>Full Access</h3>
-      <p>Complete control over your Minecraft server settings and files.</p>
-    </div>
-    <div class="feature">
-      <div class="feature-icon">💖</div>
-      <h3>Free, Forever</h3>
-      <p>No credit card required. No hidden costs. Just play.</p>
+    <div class="features-container">
+      <div class="features-header">
+        <h2>Why Choose VoidedMC?</h2>
+        <p>Experience the freedom of true free hosting with enterprise-grade performance and reliability.</p>
+      </div>
+      <div class="features-grid">
+        <div class="feature">
+          <div class="feature-icon">🔓</div>
+          <h3>Full Access</h3>
+          <p>Complete control over your Minecraft server settings, files, and configurations. No restrictions, no limitations.</p>
+        </div>
+        <div class="feature">
+          <div class="feature-icon">💎</div>
+          <h3>Free Forever</h3>
+          <p>No credit card required. No hidden costs. No time limits. Just pure, unlimited Minecraft hosting joy.</p>
+        </div>
+        <div class="feature">
+          <div class="feature-icon">⚡</div>
+          <h3>Lightning Fast</h3>
+          <p>Enterprise-grade hardware ensures your server runs smoothly with minimal lag and maximum performance.</p>
+        </div>
+        <div class="feature">
+          <div class="feature-icon">🛡️</div>
+          <h3>Reliable Support</h3>
+          <p>Our dedicated team is here to help you succeed. Get assistance when you need it, how you need it.</p>
+        </div>
+      </div>
     </div>
   </section>
 
-  <!-- About Us -->
+  <!-- Ad Section -->
+  <div class="ad-container">
+    <ins class="adsbygoogle"
+         style="display:block"
+         data-ad-client="ca-pub-3581720027198766"
+         data-ad-slot="5863638486"
+         data-ad-format="auto"
+         data-full-width-responsive="true"></ins>
+  </div>
+
+  <!-- About Section -->
   <section class="about" id="about">
-    <h2>About Us</h2>
-    <div class="about-section">
-      <h3>Our Mission</h3>
-      <p>At VoidedMC Hosting, our mission is to make high-performance Minecraft server hosting accessible to everyone without cost.</p>
-    </div>
-    <div class="about-section">
-      <h3>Meet The Owner</h3>
-      <p>Hey there! I’m SimplyVoid. I started this hosting company because, like you, I wanted a better way for players to run their own servers without all the stress or crazy prices.
-        VoidedMC is all about giving everyone a chance to build, play, and create their own worlds, whether you're just starting out or running a big community. Thanks for checking us out! I can’t wait to see what you create!</p>
-    </div>
-    <div class="about-section">
-      <h3 onclick="toggleDropdown()">
-        For The Nerds! (Hardware)
-        <span class="arrow" id="nerds-arrow">▼</span>
-      </h3>
-      <section class="dropdown-content" id="nerds-dropdown">
-        <p>
-          We believe in being as open and honest as possible.
-        </p>
+    <div class="about-container">
+      <div class="about-header">
+        <h2>About VoidedMC</h2>
+      </div>
+      
+      <div class="about-section">
+        <h3>Our Mission</h3>
+        <div class="content">
+          <p>At VoidedMC Hosting, our mission is to make high-performance Minecraft server hosting accessible to everyone without cost. We believe that creativity and community shouldn't be limited by financial barriers.</p>
+        </div>
+      </div>
 
-        <p>
-          Unlike many hosting providers, we want you to know exactly what powers our services.
-        </p>
+      <div class="about-section">
+        <h3>Meet The Owner</h3>
+        <div class="content">
+          <p>Hey there! I'm SimplyVoid. I started this hosting company because, like you, I wanted a better way for players to run their own servers without all the stress or crazy prices.</p>
+          <p>VoidedMC is all about giving everyone a chance to build, play, and create their own worlds, whether you're just starting out or running a big community. Thanks for checking us out! I can't wait to see what you create!</p>
+        </div>
+      </div>
 
-        <p>
-          Yes, we know, the free tier specifications are nothing to write home about. But they’re perfect for running lots of lightweight Minecraft servers.
-        </p>
+      <div class="about-section">
+        <h3 onclick="toggleDropdown()" style="cursor: pointer;">
+          For The Nerds! (Hardware)
+          <span class="arrow" id="nerds-arrow">▼</span>
+        </h3>
+        <div class="dropdown-content" id="nerds-dropdown">
+          <div class="content">
+            <p>We believe in being as open and honest as possible. Unlike many hosting providers, we want you to know exactly what powers our services.</p>
+            
+            <p>Yes, we know, the free tier specifications are nothing to write home about. But they're perfect for running lots of lightweight Minecraft servers.</p>
+            
+            <p>Our <strong>paid tier</strong>, on the other hand, is backed by much more powerful hardware, offering significantly better performance and reliability.</p>
 
-        <p>
-          Our <strong>paid tier</strong>, on the other hand, is backed by much more powerful hardware, offering significantly better performance and reliability.
-        </p>
+            <div class="specs-section">
+              <h4>Free Tier - Dell R720</h4>
+              
+              <p><strong style="color: var(--secondary);">Processors:</strong></p>
+              <ul>
+                <li>Dual Intel E5-2690</li>
+                <li>8 cores / 16 threads per CPU (Total: 16 cores / 32 threads)</li>
+                <li>Base Clock Speed: 2.9 GHz</li>
+                <li>Max Turbo Frequency: Up to 3.8 GHz</li>
+              </ul>
 
-        <p>
-          Here’s a full breakdown of our infrastructure:
-        </p>
+              <p><strong style="color: var(--secondary);">Memory:</strong></p>
+              <ul>
+                <li>Total RAM: 196 GB DDR3 ECC Registered</li>
+                <li>RAM Speed: 2300 MHz</li>
+              </ul>
 
-        <h3 style="margin-top: 40px;">Free Tier - Dell R720</h3>
-        
-        <p><strong style="color:#9cdefc;">Processors:</strong></p>
-        <ul>
-          <li>Dual Intel E5-2690</li>
-          <li>8 cores / 16 threads per CPU (Total: 16 cores / 32 threads)</li>
-          <li>Base Clock Speed: 2.9 GHz</li>
-          <li>Max Turbo Frequency: Up to 3.8 GHz</li>
-        </ul>
+              <p><strong style="color: var(--secondary);">Storage:</strong></p>
+              <ul>
+                <li>RAID 5 – SSD Configuration</li>
+              </ul>
 
-        <p><strong style="color:#9cdefc;">Memory:</strong></p>
-        <ul>
-          <li>Total RAM: 196 GB DDR3 ECC Registered</li>
-          <li>RAM Speed: 2300 MHz</li>
-        </ul>
+              <h4>Paid Tier – Custom High-Performance Nodes</h4>
 
-        <p><strong style="color:#9cdefc;">Storage:</strong></p>
-        <ul>
-          <li>RAID 5 – SSD</li>
-        </ul>
+              <p><strong style="color: var(--accent);">Processors:</strong></p>
+              <ul>
+                <li>Intel i9-9900k</li>
+                <li>8 cores / 16 threads</li>
+                <li>Base Clock Speed: 3.1 GHz</li>
+                <li>Max Boost Clock: Up to 5.0 GHz</li>
+              </ul>
+              
+              <p><strong>Alternative Configuration:</strong></p>
+              <ul>
+                <li>Intel W-1290P</li>
+                <li>10 cores / 20 threads</li>
+                <li>Base Clock Speed: 3.7 GHz</li>
+                <li>Max Boost Clock: Up to 5.3 GHz</li>
+              </ul>
 
-        <ul> </ul>
-        <h3 style="margin-top: 40px;">Paid Tier – Custom High-Performance Nodes</h3>
+              <p><strong style="color: var(--accent);">Memory:</strong></p>
+              <ul>
+                <li>Total RAM: 64 GB DDR4</li>
+                <li>RAM Speed: 3200 MHz</li>
+              </ul>
 
-        <p><strong style="color:#ffb380;">Processors:</strong></p>
-        <ul>
-          <li>Intel i9-9900k</li>
-          <li>8 cores / 16 threads</li>
-          <li>Base Clock Speed: 3.1 GHz</li>
-          <li>Max Boost Clock: Up to 5.0 GHz</li>
-        </ul>
-        <ul>&</ul>
-        <ul>
-          <li>Intel W-1290P</li>
-          <li>10 cores / 20 threads</li>
-          <li>Base Clock Speed: 3.7 GHz</li>
-          <li>Max Boost Clock: Up to 5.3 GHz</li>
-        </ul> 
-        <p><strong style="color:#ffb380;">Memory:</strong></p>
-        <ul>
-          <li>Total RAM: 64 GB DDR4</li>
-          <li>RAM Speed: 3200 MHz</li>
-        </ul>
-
-        <p><strong style="color:#ffb380;">Storage:</strong></p>
-        <ul>
-          <li>Gen 4 NVMe SSDs</li>
-        </ul>
-      </section>
+              <p><strong style="color: var(--accent);">Storage:</strong></p>
+              <ul>
+                <li>Gen 4 NVMe SSDs for maximum performance</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
 
   <!-- Footer -->
-  <footer>&copy; 2025 VoidedMC. All rights reserved.<br><a href="/terms.html">Terms of Service</a></footer>
+  <footer class="footer">
+    <div class="footer-content">
+      <div class="footer-links">
+        <a href="/terms.html">Terms of Service</a>
+        <a href="/privacy.html">Privacy Policy</a>
+        <a href="/support.html">Support</a>
+        <a href="/status.html">Status</a>
+      </div>
+      <div class="footer-copyright">
+        © 2025 VoidedMC. All rights reserved.<br>
+        Built with ❤️ for the Minecraft community.
+      </div>
+    </div>
+  </footer>
 
   <script>
+    // Utility functions
     function copyToClipboard(text) {
-      navigator.clipboard.writeText(text).then(() => alert('Server IP copied: ' + text));
+      navigator.clipboard.writeText(text).then(() => {
+        // Create a toast notification instead of alert
+        showToast('Server IP copied: ' + text);
+      }).catch(() => {
+        // Fallback for older browsers
+        alert('Server IP copied: ' + text);
+      });
+    }
+
+    function showToast(message) {
+      const toast = document.createElement('div');
+      toast.style.cssText = `
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background: var(--surface);
+        color: var(--text);
+        padding: 1rem 1.5rem;
+        border-radius: 8px;
+        border: 1px solid var(--border);
+        backdrop-filter: blur(20px);
+        z-index: 10000;
+        opacity: 0;
+        transform: translateY(-20px);
+        transition: all 0.3s ease;
+      `;
+      toast.textContent = message;
+      document.body.appendChild(toast);
+      
+      setTimeout(() => {
+        toast.style.opacity = '1';
+        toast.style.transform = 'translateY(0)';
+      }, 100);
+      
+      setTimeout(() => {
+        toast.style.opacity = '0';
+        toast.style.transform = 'translateY(-20px)';
+        setTimeout(() => document.body.removeChild(toast), 300);
+      }, 3000);
     }
 
     function toggleDropdown() {
@@ -587,38 +1019,97 @@
 
     // Navbar scroll behavior
     const navbar = document.getElementById('navbar');
+    let lastScrollY = window.scrollY;
+
     window.addEventListener('scroll', () => {
       if (window.scrollY > 50) {
         navbar.classList.add('scrolled');
       } else {
         navbar.classList.remove('scrolled');
       }
-    });
+    }, { passive: true });
 
-    // Navbar toggle
+    // Mobile navigation toggle
     document.getElementById('nav-toggle').addEventListener('click', () => {
       document.getElementById('nav-links').classList.toggle('show');
     });
 
-    // Entrance animations
-    const observer = new IntersectionObserver(entries => {
-      entries.forEach(e => {
-        if (e.isIntersecting) e.target.classList.add('animate');
+    // Close mobile menu when clicking on a link
+    document.querySelectorAll('.navbar-links a').forEach(link => {
+      link.addEventListener('click', () => {
+        document.getElementById('nav-links').classList.remove('show');
       });
-    }, { threshold: 0.1 });
-    document.querySelectorAll('.feature-card, .about-section').forEach(el => observer.observe(el));
+    });
+
+    // Smooth scroll for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          const offsetTop = target.offsetTop - 80; // Account for fixed navbar
+          window.scrollTo({
+            top: offsetTop,
+            behavior: 'smooth'
+          });
+        }
+      });
+    });
+
+    // Intersection Observer for animations
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('animate');
+          observer.unobserve(entry.target); // Only animate once
+        }
+      });
+    }, observerOptions);
+
+    // Observe elements for animation
+    document.querySelectorAll('.feature, .about-section').forEach(el => {
+      observer.observe(el);
+    });
+
+    // Parallax effect for hero background (optional, lightweight)
+    const heroBackground = document.querySelector('.hero-bg');
+    if (heroBackground) {
+      window.addEventListener('scroll', () => {
+        const scrolled = window.pageYOffset;
+        const parallax = scrolled * 0.5;
+        heroBackground.style.transform = `translate(-50%, calc(-50% + ${parallax}px))`;
+      }, { passive: true });
+    }
+
+    // Initialize Google Ads
+    (adsbygoogle = window.adsbygoogle || []).push({});
+
+    // Performance optimization: Preload critical resources
+    const preloadLink = document.createElement('link');
+    preloadLink.rel = 'preload';
+    preloadLink.href = 'serverimage.png';
+    preloadLink.as = 'image';
+    document.head.appendChild(preloadLink);
+
+    // Handle reduced motion preference
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      document.documentElement.style.scrollBehavior = 'auto';
+      // Disable parallax and complex animations for users who prefer reduced motion
+      const style = document.createElement('style');
+      style.textContent = `
+        *, *::before, *::after {
+          animation-duration: 0.01ms !important;
+          animation-iteration-count: 1 !important;
+          transition-duration: 0.01ms !important;
+        }
+      `;
+      document.head.appendChild(style);
+    }
   </script>
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3581720027198766"
-     crossorigin="anonymous"></script>
-<!-- On homepage -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-3581720027198766"
-     data-ad-slot="5863638486"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-     (adsbygoogle = window.adsbygoogle || []).push({});
-</script>
 </body>
 </html>

@@ -4,250 +4,561 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Select Your Plan - VoidedMC</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <style>
     :root {
-      --primary: #9b5de5;
-      --background: #0e0e0e;
+      --primary: #8b5cf6;
+      --primary-dark: #7c3aed;
+      --secondary: #06b6d4;
+      --background: #0a0a0a;
+      --surface: rgba(17, 17, 17, 0.95);
+      --surface-light: rgba(30, 30, 30, 0.8);
       --text: #ffffff;
-      --highlight: #c77dff;
-      --card: rgba(30, 30, 30, 0.85);
-      --accent: #4b0a9b;
+      --text-muted: #a1a1aa;
+      --accent: #f59e0b;
+      --border: rgba(255, 255, 255, 0.1);
+      --glow: rgba(139, 92, 246, 0.3);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
     }
 
     body {
-      margin: 0;
-      font-family: 'Inter', sans-serif;
-      color: var(--text);
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
       background: var(--background);
+      color: var(--text);
+      overflow-x: hidden;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
     }
 
-    /* Dark overlay on top of video */
-    body::before {
-      content: "";
-      position: fixed;
-      inset: 0;
-      background: rgba(14, 14, 14, 0.6);
-      backdrop-filter: blur(3px);
-      z-index: -1;
-    }
-
-    /* Video background */
-    .background-video {
+    /* Animated background gradient */
+    .background-gradient {
       position: fixed;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
-      object-fit: cover;
+      background: 
+        radial-gradient(circle at 20% 80%, rgba(139, 92, 246, 0.3) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(6, 182, 212, 0.3) 0%, transparent 50%),
+        radial-gradient(circle at 40% 40%, rgba(245, 158, 11, 0.2) 0%, transparent 50%);
+      animation: gradientShift 20s ease-in-out infinite;
       z-index: -2;
     }
 
-    main {
-      position: relative;
-      z-index: 1;
-      display: flex;
-      flex-direction: column;
+    @keyframes gradientShift {
+      0%, 100% { transform: scale(1) rotate(0deg); }
+      50% { transform: scale(1.1) rotate(180deg); }
     }
 
-    /* Back Button */
+    /* Video background with better performance */
+    .background-video {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      min-width: 100%;
+      min-height: 100%;
+      width: auto;
+      height: auto;
+      transform: translate(-50%, -50%);
+      z-index: -3;
+      opacity: 0.4;
+      filter: blur(1px);
+    }
+
+    /* Overlay for better readability */
+    .overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(10, 10, 10, 0.7);
+      backdrop-filter: blur(2px);
+      z-index: -1;
+    }
+
+    /* Modern back button */
     .back-button {
       position: fixed;
-      top: 20px;
-      left: 20px;
-      background: var(--card);
-      border: 1px solid var(--highlight);
-      color: var(--highlight);
-      padding: 0.6rem 1.2rem;
-      border-radius: 8px;
-      font-size: 1rem;
+      top: 24px;
+      left: 24px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 12px 20px;
+      border-radius: 12px;
+      font-size: 14px;
+      font-weight: 500;
       text-decoration: none;
-      transition: background 0.3s, color 0.3s, transform 0.2s;
-      z-index: 10;
-    }
-    .back-button:hover {
-      background: var(--highlight);
-      color: #fff;
-      transform: scale(1.05);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      z-index: 100;
+      backdrop-filter: blur(20px);
+      display: flex;
+      align-items: center;
+      gap: 8px;
     }
 
-    /* Modernized Header */
-    header {
-      padding: 5rem 1rem 4rem;
+    .back-button:hover {
+      background: var(--surface-light);
+      border-color: var(--primary);
+      transform: translateX(-2px);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+    }
+
+    /* Main content wrapper */
+    .main-wrapper {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Modern header */
+    .hero {
+      padding: 120px 24px 80px;
       text-align: center;
       position: relative;
     }
 
-    .header-content {
-      display: inline-block;
-      background: var(--card);
-      padding: 2rem 3rem;
-      border-radius: 16px;
-      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.4);
-      animation: fadeIn 1s ease forwards;
+    .hero-content {
+      max-width: 800px;
+      margin: 0 auto;
+      animation: fadeInUp 1s ease-out;
     }
 
-    header h1 {
-      font-size: 3rem;
-      margin-bottom: 0.5rem;
-      color: var(--highlight);
-      text-shadow: 0 0 8px rgba(199, 125, 255, 0.8);
+    .hero h1 {
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      font-weight: 700;
+      margin-bottom: 24px;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      background-clip: text;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      line-height: 1.1;
     }
 
-    header p {
-      font-size: 1.3rem;
-      color: #ddd;
-      margin: 0;
+    .hero p {
+      font-size: 1.25rem;
+      color: var(--text-muted);
+      font-weight: 400;
+      max-width: 600px;
+      margin: 0 auto 40px;
+      line-height: 1.6;
     }
 
-    @keyframes fadeIn {
-      0% { opacity: 0; transform: translateY(20px); }
-      100% { opacity: 1; transform: translateY(0); }
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      padding: 8px 16px;
+      font-size: 14px;
+      font-weight: 500;
+      margin-bottom: 32px;
+      backdrop-filter: blur(20px);
     }
 
-    /* Plans Section */
-    .plans {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 2rem;
-      padding: 3rem 2rem;
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Plans grid */
+    .plans-container {
+      padding: 0 24px 80px;
       max-width: 1200px;
       margin: 0 auto;
+      width: 100%;
     }
 
+    .plans {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 32px;
+      animation: fadeInUp 1s ease-out 0.2s both;
+    }
+
+    /* Plan cards */
     .plan {
-      background: var(--card);
-      border-radius: 16px;
-      padding: 2rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 32px;
       text-align: center;
-      border: 1px solid #333;
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      position: relative;
+      backdrop-filter: blur(20px);
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+    }
+
+    .plan::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--primary), var(--secondary));
+      transform: scaleX(0);
+      transition: transform 0.4s ease;
+    }
+
+    .plan:hover::before {
+      transform: scaleX(1);
     }
 
     .plan:hover {
-      transform: translateY(-6px);
-      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.6);
+      transform: translateY(-8px);
+      border-color: var(--primary);
+      box-shadow: 
+        0 20px 40px rgba(0, 0, 0, 0.4),
+        0 0 80px var(--glow);
+    }
+
+    .plan.featured {
+      border-color: var(--primary);
+      background: linear-gradient(135deg, var(--surface), rgba(139, 92, 246, 0.05));
+    }
+
+    .plan.featured::after {
+      content: 'Most Popular';
+      position: absolute;
+      top: -1px;
+      right: 24px;
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      color: white;
+      padding: 8px 16px;
+      border-radius: 0 0 12px 12px;
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .plan-icon {
+      width: 64px;
+      height: 64px;
+      margin: 0 auto 24px;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
     }
 
     .plan h2 {
-      font-size: 1.8rem;
-      margin-bottom: 0.5rem;
-      color: var(--highlight);
+      font-size: 1.75rem;
+      font-weight: 600;
+      margin-bottom: 8px;
+      color: var(--text);
+    }
+
+    .plan-description {
+      color: var(--text-muted);
+      font-size: 14px;
+      margin-bottom: 24px;
     }
 
     .price {
-      font-size: 1.4rem;
-      margin: 1rem 0;
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin: 24px 0;
+      color: var(--text);
+    }
+
+    .price-period {
+      font-size: 1rem;
+      font-weight: 400;
+      color: var(--text-muted);
     }
 
     .features {
       list-style: none;
-      padding: 0;
-      margin: 1rem 0;
+      margin: 32px 0;
       text-align: left;
+      flex-grow: 1;
     }
 
     .features li {
-      margin: 0.4rem 0;
-      position: relative;
-      padding-left: 1.4rem;
+      padding: 12px 0;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: var(--text-muted);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .features li:last-child {
+      border-bottom: none;
     }
 
     .features li::before {
-      content: "★";
-      position: absolute;
-      left: 0;
-      color: var(--highlight);
+      content: "✓";
+      width: 20px;
+      height: 20px;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: bold;
+      color: white;
+      flex-shrink: 0;
     }
 
     .select-button {
-      margin-top: 1rem;
-      padding: 0.75rem 1.5rem;
-      background-color: var(--highlight);
+      width: 100%;
+      padding: 16px 24px;
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
       border: none;
       color: white;
-      border-radius: 8px;
-      font-size: 1rem;
+      border-radius: 12px;
+      font-size: 16px;
+      font-weight: 600;
       cursor: pointer;
-      transition: background 0.3s, transform 0.2s ease-in-out;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .select-button::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+      transition: left 0.5s;
+    }
+
+    .select-button:hover::before {
+      left: 100%;
     }
 
     .select-button:hover {
-      background-color: var(--accent);
-      transform: scale(1.05);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(139, 92, 246, 0.4);
     }
 
-    /* Footer */
+    .select-button.secondary {
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      border: none;
+      color: white;
+    }
+
+    .select-button.secondary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(139, 92, 246, 0.4);
+    }
+
+    /* Modern footer */
     footer {
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+      padding: 40px 24px;
       text-align: center;
-      padding: 2rem 1rem;
-      background: rgba(0, 0, 0, 0.6);
-      color: #aaa;
-      font-size: 0.9rem;
+      backdrop-filter: blur(20px);
+      margin-top: auto;
     }
 
-    a {
+    .footer-content {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      gap: 32px;
+      margin-bottom: 24px;
+      flex-wrap: wrap;
+    }
+
+    .footer-links a {
+      color: var(--text-muted);
       text-decoration: none;
+      font-size: 14px;
+      transition: color 0.3s ease;
     }
 
-    @media (max-width: 600px) {
-      header h1 { font-size: 2rem; }
-      header p { font-size: 1rem; }
-      .header-content { padding: 1.5rem 2rem; }
+    .footer-links a:hover {
+      color: var(--primary);
+    }
+
+    .footer-copyright {
+      color: var(--text-muted);
+      font-size: 14px;
+    }
+
+    /* Responsive design */
+    @media (max-width: 768px) {
+      .back-button {
+        top: 16px;
+        left: 16px;
+        padding: 10px 16px;
+      }
+
+      .hero {
+        padding: 100px 16px 60px;
+      }
+
+      .plans-container {
+        padding: 0 16px 60px;
+      }
+
+      .plans {
+        grid-template-columns: 1fr;
+        gap: 24px;
+      }
+
+      .plan {
+        padding: 24px;
+      }
+
+      .footer-links {
+        flex-direction: column;
+        gap: 16px;
+      }
+    }
+
+    /* Scroll animations */
+    @media (prefers-reduced-motion: no-preference) {
+      .plan {
+        opacity: 0;
+        animation: slideInUp 0.6s ease-out forwards;
+      }
+
+      .plan:nth-child(1) { animation-delay: 0.1s; }
+      .plan:nth-child(2) { animation-delay: 0.2s; }
+      .plan:nth-child(3) { animation-delay: 0.3s; }
+    }
+
+    @keyframes slideInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Loading optimization */
+    .background-video {
+      will-change: auto;
+    }
+
+    /* Performance improvements */
+    * {
+      backface-visibility: hidden;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
     }
   </style>
 </head>
 <body>
-  <!-- Video Background -->
+  <!-- Background Elements -->
+  <div class="background-gradient"></div>
   <video autoplay loop muted playsinline class="background-video">
     <source src="MCShaders.mp4" type="video/mp4" />
   </video>
+  <div class="overlay"></div>
 
   <!-- Back Button -->
-  <a href="javascript:history.back()" class="back-button">← Back</a>
+  <a href="javascript:history.back()" class="back-button">
+    ← Back
+  </a>
 
-  <main>
-    <header>
-      <div class="header-content">
-        <h1>Select Your Adventure</h1>
-        <p>Choose the perfect plan for your Minecraft journey.</p>
-      </div>
-    </header>
-
-    <!-- Plans Section -->
-    <section class="plans">
-      <div class="plan">
-        <h2>Free Tier</h2>
-        <p class="price">Free</p>
-        <ul class="features">
-          <li>3 GB RAM</li>
-          <li>3 vCPU</li>
-          <li>15 GB SSD</li>
-          <li>Basic Support</li>
-        </ul>
-        <a href="nothing">
-          <button class="select-button">Get Started</button>
-        </a>
-      </div>
-
-      <div class="plan">
-        <h2>Paid Tier</h2>
-        <p class="price">$5 / month</p>
-        <ul class="features">
-          <li>4 GB RAM (expandable)</li>
-          <li>4 vCPU (expandable)</li>
-          <li>30 GB SSD</li>
-          <li>Basic Support</li>
-        </ul>
-        <button class="select-button">Upgrade</button>
+  <div class="main-wrapper">
+    <!-- Hero Section -->
+    <section class="hero">
+      <div class="hero-content">
+        <div class="hero-badge">
+          🎮 Premium Minecraft Hosting
+        </div>
+        <h1>Choose Your Adventure</h1>
+        <p>Experience lightning-fast Minecraft servers with our cutting-edge infrastructure. From casual builders to hardcore gamers, we've got the perfect plan for your journey.</p>
       </div>
     </section>
-  </main>
+
+    <!-- Plans Section -->
+    <section class="plans-container">
+      <div class="plans">
+        <div class="plan">
+          <div class="plan-icon">🚀</div>
+          <h2>Free Tier</h2>
+          <p class="plan-description">Perfect for getting started</p>
+          <div class="price">
+            Free
+          </div>
+          <ul class="features">
+            <li>3 GB RAM</li>
+            <li>3 vCPU Cores</li>
+            <li>15 GB SSD Storage</li>
+            <li>Basic Support</li>
+            <li>99.5% Uptime</li>
+            <li>Community Access</li>
+          </ul>
+          <a href="nothing">
+            <button class="select-button secondary">Get Started</button>
+          </a>
+        </div>
+
+        <div class="plan featured">
+          <div class="plan-icon">⚡</div>
+          <h2>Pro Tier</h2>
+          <p class="plan-description">For serious Minecraft enthusiasts</p>
+          <div class="price">
+            $5<span class="price-period">/month</span>
+          </div>
+          <ul class="features">
+            <li>4 GB RAM (Expandable)</li>
+            <li>4 vCPU Cores (Expandable)</li>
+            <li>30 GB SSD Storage</li>
+            <li>Priority Support</li>
+            <li>99.9% Uptime SLA</li>
+            <li>Advanced Analytics</li>
+            <li>Plugin Support</li>
+            <li>Daily Backups</li>
+          </ul>
+          <button class="select-button">Upgrade Now</button>
+        </div>
+      </div>
+    </section>
+  </div>
 
   <!-- Footer -->
   <footer>
-    &copy; 2025 VoidedMC. All rights reserved.
+    <div class="footer-content">
+      <div class="footer-links">
+        <a href="#">Terms of Service</a>
+        <a href="#">Privacy Policy</a>
+        <a href="#">Support</a>
+        <a href="#">Documentation</a>
+        <a href="#">Status</a>
+      </div>
+      <div class="footer-copyright">
+        © 2025 VoidedMC. All rights reserved. Built with ❤️ for the Minecraft community.
+      </div>
+    </div>
   </footer>
 </body>
 </html>

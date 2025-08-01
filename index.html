@@ -450,6 +450,8 @@
       text-align: center;
       transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
       backdrop-filter: blur(20px);
+      opacity: 0;
+      transform: translateY(30px);
     }
 
     .feature:hover {
@@ -516,6 +518,8 @@
       backdrop-filter: blur(20px);
       overflow: hidden;
       transition: all 0.3s ease;
+      opacity: 0;
+      transform: translateY(30px);
     }
 
     .about-section:hover {
@@ -664,6 +668,13 @@
 
     .animate {
       animation: fadeInUp 0.8s ease-out forwards;
+    }
+
+    /* Ensure animated elements are visible once animated */
+    .feature.animate,
+    .about-section.animate {
+      opacity: 1;
+      transform: translateY(0);
     }
 
     /* Responsive Design */
@@ -1086,9 +1097,11 @@
       });
     }, observerOptions);
 
-    // Observe elements for animation
-    document.querySelectorAll('.feature, .about-section').forEach(el => {
-      observer.observe(el);
+    // Observe elements for animation - ensure they start hidden
+    document.addEventListener('DOMContentLoaded', () => {
+      document.querySelectorAll('.feature, .about-section').forEach(el => {
+        observer.observe(el);
+      });
     });
 
     // Fixed parallax effect for hero background

@@ -3,21 +3,26 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Select Your Plan - VoidedMC</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <title>Choose your plan - VoidedMC</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
     :root {
-      --primary: #8b5cf6;
-      --primary-dark: #7c3aed;
-      --secondary: #06b6d4;
-      --background: #0a0a0a;
-      --surface: rgba(17, 17, 17, 0.95);
-      --surface-light: rgba(30, 30, 30, 0.8);
-      --text: #ffffff;
-      --text-muted: #a1a1aa;
-      --accent: #f59e0b;
-      --border: rgba(255, 255, 255, 0.1);
-      --glow: rgba(139, 92, 246, 0.3);
+      --primary: #C084FC;
+      --primary-dark: #A78BFA;
+      --secondary: #F9A8D4;
+      --background: #1E1B2E;
+      --surface: rgba(42, 38, 58, 0.95);
+      --surface-light: rgba(42, 38, 58, 0.9);
+      --text: #CCCCCC;
+      --text-muted: #CCCCCC;
+      --text-highlight: #DDBEFF;
+      --accent: #C084FC;
+      --border: rgba(221, 190, 255, 0.1);
+      --glow: rgba(192, 132, 252, 0.3);
+      --success: #10b981;
+      --gradient: linear-gradient(135deg, var(--primary), var(--secondary));
+      --icon-pink: #F9A8D4;
+      --icon-purple: #A78BFA;
     }
 
     * {
@@ -26,143 +31,478 @@
       box-sizing: border-box;
     }
 
+    html {
+      scroll-behavior: smooth;
+      font-size: 16px;
+    }
+
     body {
       font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
       background: var(--background);
       color: var(--text);
-      overflow-x: hidden;
+      line-height: 1.6;
       min-height: 100vh;
-      display: flex;
-      flex-direction: column;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
     }
 
-    /* Animated background gradient */
-    .background-gradient {
+    /* Background Effects */
+    .background-particles {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      z-index: -2;
+      pointer-events: none;
+    }
+
+    .particle {
+      position: absolute;
+      width: 6px;
+      height: 6px;
+      background: var(--primary);
+      opacity: 0.6;
+      animation: float 15s infinite linear;
+    }
+
+    .particle:nth-child(1) { left: 10%; animation-delay: 0s; background: var(--primary); }
+    .particle:nth-child(2) { left: 20%; animation-delay: 2s; background: var(--secondary); }
+    .particle:nth-child(3) { left: 30%; animation-delay: 4s; background: var(--icon-pink); }
+    .particle:nth-child(4) { left: 40%; animation-delay: 6s; background: var(--primary); }
+    .particle:nth-child(5) { left: 50%; animation-delay: 8s; background: var(--icon-purple); }
+    .particle:nth-child(6) { left: 60%; animation-delay: 10s; background: var(--primary); }
+    .particle:nth-child(7) { left: 70%; animation-delay: 12s; background: var(--secondary); }
+    .particle:nth-child(8) { left: 80%; animation-delay: 14s; background: var(--icon-pink); }
+    .particle:nth-child(9) { left: 90%; animation-delay: 16s; background: var(--primary); }
+    .particle:nth-child(10) { left: 15%; animation-delay: 18s; background: var(--icon-purple); }
+
+    @keyframes float {
+      0% {
+        transform: translateY(100vh) rotate(0deg);
+        opacity: 0;
+      }
+      10% {
+        opacity: 0.6;
+      }
+      90% {
+        opacity: 0.6;
+      }
+      100% {
+        transform: translateY(-100px) rotate(360deg);
+        opacity: 0;
+      }
+    }
+
+    .background-ambient {
       position: fixed;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
       background: 
-        radial-gradient(circle at 20% 80%, rgba(139, 92, 246, 0.3) 0%, transparent 50%),
-        radial-gradient(circle at 80% 20%, rgba(6, 182, 212, 0.3) 0%, transparent 50%),
-        radial-gradient(circle at 40% 40%, rgba(245, 158, 11, 0.2) 0%, transparent 50%);
-      animation: gradientShift 20s ease-in-out infinite;
-      z-index: -2;
-    }
-
-    @keyframes gradientShift {
-      0%, 100% { transform: scale(1) rotate(0deg); }
-      50% { transform: scale(1.1) rotate(180deg); }
-    }
-
-    /* Video background with better performance */
-    .background-video {
-      position: fixed;
-      top: 50%;
-      left: 50%;
-      min-width: 100%;
-      min-height: 100%;
-      width: auto;
-      height: auto;
-      transform: translate(-50%, -50%);
+        radial-gradient(circle at 20% 80%, rgba(192, 132, 252, 0.05) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(249, 168, 212, 0.05) 0%, transparent 50%),
+        radial-gradient(circle at 40% 40%, rgba(167, 139, 250, 0.03) 0%, transparent 50%);
       z-index: -3;
-      opacity: 0.4;
-      filter: blur(1px);
     }
 
-    /* Overlay for better readability */
-    .overlay {
+    /* Header */
+    .navbar {
       position: fixed;
-      inset: 0;
-      background: rgba(10, 10, 10, 0.7);
-      backdrop-filter: blur(2px);
-      z-index: -1;
-    }
-
-    /* Modern back button */
-    .back-button {
-      position: fixed;
-      top: 24px;
-      left: 24px;
+      top: 0;
+      width: 100%;
       background: var(--surface);
-      border: 1px solid var(--border);
-      color: var(--text);
-      padding: 12px 20px;
-      border-radius: 12px;
-      font-size: 14px;
-      font-weight: 500;
-      text-decoration: none;
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-      z-index: 100;
       backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+      padding: 1rem 0;
+      z-index: 1000;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .navbar.scrolled {
+      padding: 0.75rem 0;
+      background: rgba(42, 38, 58, 0.98);
+    }
+
+    .navbar-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .navbar-logo a {
+      font-size: 1.75rem;
+      font-weight: 800;
+      background: var(--gradient);
+      background-clip: text;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+
+    .back-link {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.875rem;
+      font-weight: 500;
       display: flex;
       align-items: center;
-      gap: 8px;
-    }
-
-    .back-button:hover {
+      gap: 0.5rem;
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+      transition: all 0.3s ease;
       background: var(--surface-light);
+      border: 1px solid var(--border);
+    }
+
+    .back-link:hover {
+      color: var(--text-highlight);
       border-color: var(--primary);
-      transform: translateX(-2px);
-      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+      background: var(--surface);
+      transform: translateY(-1px);
     }
 
-    /* Main content wrapper */
-    .main-wrapper {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      position: relative;
-      z-index: 1;
-    }
-
-    /* Modern header */
+    /* Hero Section */
     .hero {
-      padding: 120px 24px 80px;
-      text-align: center;
-      position: relative;
-    }
-
-    .hero-content {
-      max-width: 800px;
+      max-width: 1200px;
       margin: 0 auto;
-      animation: fadeInUp 1s ease-out;
+      padding: 140px 2rem 80px;
+      text-align: center;
     }
 
     .hero h1 {
       font-size: clamp(2.5rem, 5vw, 4rem);
-      font-weight: 700;
-      margin-bottom: 24px;
-      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      font-weight: 800;
+      background: var(--gradient);
       background-clip: text;
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
-      line-height: 1.1;
+      margin-bottom: 1.5rem;
+      letter-spacing: -0.04em;
     }
 
     .hero p {
       font-size: 1.25rem;
-      color: var(--text-muted);
-      font-weight: 400;
+      color: var(--text);
       max-width: 600px;
-      margin: 0 auto 40px;
-      line-height: 1.6;
+      margin: 0 auto;
+      font-weight: 400;
     }
 
-    .hero-badge {
-      display: inline-flex;
-      align-items: center;
-      background: var(--surface);
+    /* Plans Grid */
+    .plans-section {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem 80px;
+    }
+
+    .plans-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 2rem;
+    }
+
+    /* Plan Cards */
+    .plan-card {
+      background: var(--surface-light);
+      border-radius: 16px;
+      padding: 2rem 1.5rem 1.5rem;
+      position: relative;
       border: 1px solid var(--border);
-      border-radius: 24px;
-      padding: 8px 16px;
-      font-size: 14px;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      backdrop-filter: blur(20px);
+      opacity: 0;
+      transform: translateY(30px);
+    }
+
+    .plan-card.animate {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .plan-card:hover {
+      border-color: var(--primary);
+      transform: translateY(-8px);
+      box-shadow: 0 20px 40px rgba(192, 132, 252, 0.2);
+    }
+
+    /* Promotional badges */
+    .promo-badge {
+      position: absolute;
+      top: -8px;
+      left: 1.5rem;
+      background: var(--gradient);
+      color: white;
+      padding: 0.375rem 1rem;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .promo-badge.gold {
+      background: linear-gradient(135deg, #f59e0b, #f97316);
+    }
+
+    .promo-badge.blue {
+      background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+    }
+
+    /* Plan header */
+    .plan-header {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 1rem;
+    }
+
+    .plan-type {
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+
+    .plan-name {
+      font-size: 2rem;
+      font-weight: 800;
+      color: var(--text-highlight);
+      margin-bottom: 0.5rem;
+      letter-spacing: -0.02em;
+    }
+
+    .plan-name.gold {
+      background: linear-gradient(135deg, #f59e0b, #f97316);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* Pricing */
+    .plan-pricing {
+      margin-bottom: 2rem;
+    }
+
+    .price-main {
+      font-size: 1rem;
       font-weight: 500;
-      margin-bottom: 32px;
+      color: var(--text-highlight);
+      margin-bottom: 0.25rem;
+    }
+
+    .price-after {
+      font-size: 0.875rem;
+      color: var(--text-muted);
+      font-weight: 400;
+    }
+
+    .price-regular {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--text-highlight);
+    }
+
+    /* Features list */
+    .features-list {
+      list-style: none;
+      margin-bottom: 2rem;
+    }
+
+    .features-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.5rem;
+      margin-bottom: 0.75rem;
+      font-size: 0.875rem;
+      color: var(--text);
+      font-weight: 400;
+      line-height: 1.4;
+      padding-left: 1rem;
+      position: relative;
+    }
+
+    .features-list li::before {
+      content: "•";
+      color: var(--primary);
+      font-weight: 900;
+      font-size: 1rem;
+      position: absolute;
+      left: 0;
+    }
+
+    /* Action buttons */
+    .plan-button {
+      width: 100%;
+      padding: 1rem 2rem;
+      border-radius: 12px;
+      font-size: 1.125rem;
+      font-weight: 600;
+      border: none;
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      text-transform: none;
+      letter-spacing: 0.1em;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .plan-button::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+      transition: left 0.5s;
+    }
+
+    .plan-button:hover::before {
+      left: 100%;
+    }
+
+    .plan-button.purple {
+      background: var(--gradient);
+      color: white;
+    }
+
+    .plan-button.purple:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 30px rgba(192, 132, 252, 0.4);
+    }
+
+    .plan-button.blue {
+      background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+      color: white;
+    }
+
+    .plan-button.blue:hover {
+      background: linear-gradient(135deg, #1d4ed8, #1e3a8a);
+      transform: translateY(-2px);
+      box-shadow: 0 10px 30px rgba(59, 130, 246, 0.4);
+    }
+
+    .plan-button.gold {
+      background: linear-gradient(135deg, #f59e0b, #f97316);
+      color: white;
+    }
+
+    .plan-button.gold:hover {
+      background: linear-gradient(135deg, #f97316, #ea580c);
+      transform: translateY(-2px);
+      box-shadow: 0 10px 30px rgba(245, 158, 11, 0.4);
+    }
+
+    /* Terms text */
+    .plan-terms {
+      margin-top: 1rem;
+      font-size: 0.6875rem;
+      color: var(--text-muted);
+      line-height: 1.4;
+    }
+
+    .plan-terms a {
+      color: var(--text-muted);
+      text-decoration: underline;
+    }
+
+    .plan-terms a:hover {
+      color: var(--text-highlight);
+    }
+
+    /* Comparison section */
+    .comparison-section {
+      max-width: 1200px;
+      margin: 80px auto 0;
+      padding: 60px 2rem;
+      text-align: center;
+    }
+
+    .comparison-title {
+      font-size: 2rem;
+      font-weight: 800;
+      background: var(--gradient);
+      background-clip: text;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 3rem;
+      letter-spacing: -0.02em;
+    }
+
+    .comparison-table {
+      background: var(--surface-light);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+      max-width: 800px;
+      margin: 0 auto;
       backdrop-filter: blur(20px);
     }
 
+    .comparison-header {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .comparison-cell {
+      padding: 1.25rem;
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: var(--text-highlight);
+    }
+
+    .comparison-cell.feature {
+      text-align: left;
+      font-weight: 400;
+      border-right: 1px solid var(--border);
+      color: var(--text);
+    }
+
+    .comparison-cell.plan-name {
+      font-weight: 700;
+      text-align: center;
+    }
+
+    .comparison-row {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .comparison-row:last-child {
+      border-bottom: none;
+    }
+
+    .check-icon {
+      width: 20px;
+      height: 20px;
+      background: var(--gradient);
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 0.75rem;
+      font-weight: 900;
+    }
+
+    .dash-icon {
+      width: 20px;
+      height: 2px;
+      background: var(--text-muted);
+      border-radius: 1px;
+    }
+
+    /* Animations */
     @keyframes fadeInUp {
       from {
         opacity: 0;
@@ -174,391 +514,279 @@
       }
     }
 
-    /* Plans grid */
-    .plans-container {
-      padding: 0 24px 80px;
-      max-width: 1200px;
-      margin: 0 auto;
-      width: 100%;
+    .animate {
+      animation: fadeInUp 0.8s ease-out forwards;
     }
 
-    .plans {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-      gap: 32px;
-      animation: fadeInUp 1s ease-out 0.2s both;
-    }
-
-    /* Plan cards */
-    .plan {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 20px;
-      padding: 32px;
-      text-align: center;
-      position: relative;
-      backdrop-filter: blur(20px);
-      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-      overflow: hidden;
-      display: flex;
-      flex-direction: column;
-      height: 100%;
-    }
-
-    .plan::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 2px;
-      background: linear-gradient(90deg, var(--primary), var(--secondary));
-      transform: scaleX(0);
-      transition: transform 0.4s ease;
-    }
-
-    .plan:hover::before {
-      transform: scaleX(1);
-    }
-
-    .plan:hover {
-      transform: translateY(-8px);
-      border-color: var(--primary);
-      box-shadow: 
-        0 20px 40px rgba(0, 0, 0, 0.4),
-        0 0 80px var(--glow);
-    }
-
-    .plan.featured {
-      border-color: var(--primary);
-      background: linear-gradient(135deg, var(--surface), rgba(139, 92, 246, 0.05));
-    }
-
-    .plan.featured::after {
-      content: 'Most Popular';
-      position: absolute;
-      top: -1px;
-      right: 24px;
-      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-      color: white;
-      padding: 8px 16px;
-      border-radius: 0 0 12px 12px;
-      font-size: 12px;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-    }
-
-    .plan-icon {
-      width: 64px;
-      height: 64px;
-      margin: 0 auto 24px;
-      background: linear-gradient(135deg, var(--primary), var(--secondary));
-      border-radius: 16px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 24px;
-    }
-
-    .plan h2 {
-      font-size: 1.75rem;
-      font-weight: 600;
-      margin-bottom: 8px;
-      color: var(--text);
-    }
-
-    .plan-description {
-      color: var(--text-muted);
-      font-size: 14px;
-      margin-bottom: 24px;
-    }
-
-    .price {
-      font-size: 2.5rem;
-      font-weight: 700;
-      margin: 24px 0;
-      color: var(--text);
-    }
-
-    .price-period {
-      font-size: 1rem;
-      font-weight: 400;
-      color: var(--text-muted);
-    }
-
-    .features {
-      list-style: none;
-      margin: 32px 0;
-      text-align: left;
-      flex-grow: 1;
-    }
-
-    .features li {
-      padding: 12px 0;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      color: var(--text-muted);
-      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-    }
-
-    .features li:last-child {
-      border-bottom: none;
-    }
-
-    .features li::before {
-      content: "✓";
-      width: 20px;
-      height: 20px;
-      background: linear-gradient(135deg, var(--primary), var(--secondary));
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 12px;
-      font-weight: bold;
-      color: white;
-      flex-shrink: 0;
-    }
-
-    .select-button {
-      width: 100%;
-      padding: 16px 24px;
-      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-      border: none;
-      color: white;
-      border-radius: 12px;
-      font-size: 16px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-      position: relative;
-      overflow: hidden;
-    }
-
-    .select-button::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: -100%;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-      transition: left 0.5s;
-    }
-
-    .select-button:hover::before {
-      left: 100%;
-    }
-
-    .select-button:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 25px rgba(139, 92, 246, 0.4);
-    }
-
-    .select-button.secondary {
-      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-      border: none;
-      color: white;
-    }
-
-    .select-button.secondary:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 25px rgba(139, 92, 246, 0.4);
-    }
-
-    /* Modern footer */
-    footer {
-      background: var(--surface);
-      border-top: 1px solid var(--border);
-      padding: 40px 24px;
-      text-align: center;
-      backdrop-filter: blur(20px);
-      margin-top: auto;
-    }
-
-    .footer-content {
-      max-width: 1200px;
-      margin: 0 auto;
-    }
-
-    .footer-links {
-      display: flex;
-      justify-content: center;
-      gap: 32px;
-      margin-bottom: 24px;
-      flex-wrap: wrap;
-    }
-
-    .footer-links a {
-      color: var(--text-muted);
-      text-decoration: none;
-      font-size: 14px;
-      transition: color 0.3s ease;
-    }
-
-    .footer-links a:hover {
-      color: var(--primary);
-    }
-
-    .footer-copyright {
-      color: var(--text-muted);
-      font-size: 14px;
-    }
-
-    /* Responsive design */
+    /* Mobile responsive */
     @media (max-width: 768px) {
-      .back-button {
-        top: 16px;
-        left: 16px;
-        padding: 10px 16px;
+      .navbar-container {
+        padding: 0 1rem;
       }
 
       .hero {
-        padding: 100px 16px 60px;
+        padding: 120px 1rem 60px;
       }
 
-      .plans-container {
-        padding: 0 16px 60px;
+      .hero h1 {
+        font-size: 2.25rem;
       }
 
-      .plans {
+      .plans-section {
+        padding: 0 1rem 60px;
+      }
+
+      .plans-grid {
         grid-template-columns: 1fr;
-        gap: 24px;
+        gap: 1.5rem;
       }
 
-      .plan {
-        padding: 24px;
+      .plan-card {
+        padding: 1.5rem 1.25rem 1.25rem;
       }
 
-      .footer-links {
-        flex-direction: column;
-        gap: 16px;
-      }
-    }
-
-    /* Scroll animations */
-    @media (prefers-reduced-motion: no-preference) {
-      .plan {
-        opacity: 0;
-        animation: slideInUp 0.6s ease-out forwards;
+      .comparison-section {
+        padding: 40px 1rem;
       }
 
-      .plan:nth-child(1) { animation-delay: 0.1s; }
-      .plan:nth-child(2) { animation-delay: 0.2s; }
-      .plan:nth-child(3) { animation-delay: 0.3s; }
-    }
-
-    @keyframes slideInUp {
-      from {
-        opacity: 0;
-        transform: translateY(30px);
+      .comparison-header,
+      .comparison-row {
+        grid-template-columns: 1fr;
       }
-      to {
-        opacity: 1;
-        transform: translateY(0);
+
+      .comparison-cell {
+        border-right: none;
+        border-bottom: 1px solid var(--border);
       }
-    }
-
-    /* Loading optimization */
-    .background-video {
-      will-change: auto;
-    }
-
-    /* Performance improvements */
-    * {
-      backface-visibility: hidden;
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
     }
   </style>
 </head>
 <body>
-  <!-- Background Elements -->
-  <div class="background-gradient"></div>
-  <video autoplay loop muted playsinline class="background-video">
-    <source src="MCShaders.mp4" type="video/mp4" />
-  </video>
-  <div class="overlay"></div>
-
-  <!-- Back Button -->
-  <a href="javascript:history.back()" class="back-button">
-    ← Back
-  </a>
-
-  <div class="main-wrapper">
-    <!-- Hero Section -->
-    <section class="hero">
-      <div class="hero-content">
-        <div class="hero-badge">
-          🎮 Premium Minecraft Hosting
-        </div>
-        <h1>Choose Your Adventure</h1>
-        <p>Experience lightning-fast Minecraft servers with our cutting-edge infrastructure. From casual builders to hardcore gamers, we've got the perfect plan for your journey.</p>
-      </div>
-    </section>
-
-    <!-- Plans Section -->
-    <section class="plans-container">
-      <div class="plans">
-        <div class="plan">
-          <div class="plan-icon">🚀</div>
-          <h2>Free Tier</h2>
-          <p class="plan-description">Perfect for getting started</p>
-          <div class="price">
-            Free
-          </div>
-          <ul class="features">
-            <li>3 GB RAM</li>
-            <li>3 vCPU Cores</li>
-            <li>15 GB SSD Storage</li>
-            <li>Basic Support</li>
-            <li>99.5% Uptime</li>
-            <li>Community Access</li>
-          </ul>
-          <a href="nothing">
-            <button class="select-button secondary">Get Started</button>
-          </a>
-        </div>
-
-        <div class="plan featured">
-          <div class="plan-icon">⚡</div>
-          <h2>Pro Tier</h2>
-          <p class="plan-description">For serious Minecraft enthusiasts</p>
-          <div class="price">
-            $5<span class="price-period">/month</span>
-          </div>
-          <ul class="features">
-            <li>4 GB RAM (Expandable)</li>
-            <li>4 vCPU Cores (Expandable)</li>
-            <li>30 GB SSD Storage</li>
-            <li>Priority Support</li>
-            <li>99.9% Uptime SLA</li>
-            <li>Advanced Analytics</li>
-            <li>Plugin Support</li>
-            <li>Daily Backups</li>
-          </ul>
-          <button class="select-button">Upgrade Now</button>
-        </div>
-      </div>
-    </section>
+  <div class="background-ambient"></div>
+  <div class="background-particles">
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
   </div>
 
-  <!-- Footer -->
-  <footer>
-    <div class="footer-content">
-      <div class="footer-links">
-        <a href="#">Terms of Service</a>
-        <a href="#">Privacy Policy</a>
-        <a href="#">Support</a>
-        <a href="#">Documentation</a>
-        <a href="#">Status</a>
+  <!-- Header -->
+  <header class="navbar" id="navbar">
+    <div class="navbar-container">
+      <div class="navbar-logo">
+        <a href="index.html">VoidedMC</a>
       </div>
-      <div class="footer-copyright">
-        © 2025 VoidedMC. All rights reserved. Built with ❤️ for the Minecraft community.
+      <a href="javascript:history.back()" class="back-link">
+        ← Back
+      </a>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <h1>Choose your plan</h1>
+    <p>Get premium Minecraft hosting with lightning-fast performance. Start free or upgrade for enhanced features and priority support.</p>
+  </section>
+
+  <!-- Plans Section -->
+  <section class="plans-section">
+    <div class="plans-grid">
+      <!-- Free Plan -->
+      <div class="plan-card">
+        <div class="promo-badge">Free forever</div>
+        <div class="plan-header">
+          <span class="plan-type">🎮 VoidedMC</span>
+        </div>
+        <h2 class="plan-name">Starter</h2>
+        
+        <div class="plan-pricing">
+          <div class="price-main">Free forever</div>
+        </div>
+
+        <ul class="features-list">
+          <li>3 GB RAM allocation</li>
+          <li>3 vCPU cores</li>
+          <li>15 GB SSD storage</li>
+          <li>Community support</li>
+          <li>Basic server controls</li>
+          <li>99.5% uptime guarantee</li>
+        </ul>
+
+        <button class="plan-button purple">Get Started Now →</button>
+        
+        <p class="plan-terms">
+          Free forever. No credit card required. <a href="#">Terms apply</a>.
+        </p>
+      </div>
+
+      <!-- Pro Plan -->
+      <div class="plan-card">
+        <div class="promo-badge blue">$0 for 1 month</div>
+        <div class="plan-header">
+          <span class="plan-type">🎮 VoidedMC</span>
+        </div>
+        <h2 class="plan-name">Pro</h2>
+        
+        <div class="plan-pricing">
+          <div class="price-main">$0 for 1 month</div>
+          <div class="price-after">$5.99 / month after</div>
+        </div>
+
+        <ul class="features-list">
+          <li>1 verified Pro server</li>
+          <li>4 GB RAM (expandable to 8GB)</li>
+          <li>4 vCPU cores (expandable)</li>
+          <li>30 GB SSD storage</li>
+          <li>Priority 24/7 support</li>
+          <li>99.9% uptime SLA</li>
+          <li>Advanced server analytics</li>
+          <li>Plugin & mod support</li>
+          <li>Daily automated backups</li>
+          <li>Custom domain support</li>
+        </ul>
+
+        <button class="plan-button blue">Try 1 month for $0 →</button>
+        
+        <p class="plan-terms">
+          $0 for 1 month, then $5.99 per month after. Offer only available if you haven't tried Pro before. <a href="#">Terms apply</a>.
+        </p>
+      </div>
+
+      <!-- Enterprise Plan -->
+      <div class="plan-card">
+        <div class="plan-header">
+          <span class="plan-type">🎮 VoidedMC</span>
+        </div>
+        <h2 class="plan-name gold">Enterprise</h2>
+        
+        <div class="plan-pricing">
+          <div class="price-regular">$16.99 / month</div>
+        </div>
+
+        <ul class="features-list">
+          <li>Multiple premium servers</li>
+          <li>8 GB RAM per server</li>
+          <li>8 vCPU cores per server</li>
+          <li>100 GB SSD storage</li>
+          <li>White-glove support</li>
+          <li>99.99% uptime SLA</li>
+          <li>Advanced DDoS protection</li>
+          <li>Custom branding options</li>
+          <li>API access</li>
+          <li>Dedicated account manager</li>
+        </ul>
+
+        <button class="plan-button gold">Get Enterprise →</button>
+        
+        <p class="plan-terms">
+          For teams and organizations. Multiple servers included. <a href="#">Terms apply</a>.
+        </p>
       </div>
     </div>
-  </footer>
+  </section>
+
+  <!-- Comparison Section -->
+  <section class="comparison-section">
+    <h2 class="comparison-title">Go premium and enjoy full control of your server. Cancel anytime.</h2>
+    
+    <div class="comparison-table">
+      <div class="comparison-header">
+        <div class="comparison-cell feature">What you'll get</div>
+        <div class="comparison-cell plan-name">VoidedMC Starter</div>
+        <div class="comparison-cell plan-name">🎮 VoidedMC Premium plans</div>
+      </div>
+      
+      <div class="comparison-row">
+        <div class="comparison-cell feature">24/7 server uptime</div>
+        <div class="comparison-cell"><span class="dash-icon"></span></div>
+        <div class="comparison-cell"><span class="check-icon">✓</span></div>
+      </div>
+      
+      <div class="comparison-row">
+        <div class="comparison-cell feature">Plugin & mod support</div>
+        <div class="comparison-cell"><span class="dash-icon"></span></div>
+        <div class="comparison-cell"><span class="check-icon">✓</span></div>
+      </div>
+      
+      <div class="comparison-row">
+        <div class="comparison-cell feature">Custom server configuration</div>
+        <div class="comparison-cell"><span class="dash-icon"></span></div>
+        <div class="comparison-cell"><span class="check-icon">✓</span></div>
+      </div>
+      
+      <div class="comparison-row">
+        <div class="comparison-cell feature">Priority support</div>
+        <div class="comparison-cell"><span class="dash-icon"></span></div>
+        <div class="comparison-cell"><span class="check-icon">✓</span></div>
+      </div>
+      
+      <div class="comparison-row">
+        <div class="comparison-cell feature">Real-time server monitoring</div>
+        <div class="comparison-cell"><span class="dash-icon"></span></div>
+        <div class="comparison-cell"><span class="check-icon">✓</span></div>
+      </div>
+      
+      <div class="comparison-row">
+        <div class="comparison-cell feature">Automated backups</div>
+        <div class="comparison-cell"><span class="dash-icon"></span></div>
+        <div class="comparison-cell"><span class="check-icon">✓</span></div>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    // Navbar scroll behavior
+    const navbar = document.getElementById('navbar');
+    
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 50) {
+        navbar.classList.add('scrolled');
+      } else {
+        navbar.classList.remove('scrolled');
+      }
+    }, { passive: true });
+
+    // Intersection Observer for animations
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('animate');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, observerOptions);
+
+    // Observe elements for animation
+    document.addEventListener('DOMContentLoaded', () => {
+      document.querySelectorAll('.plan-card').forEach(el => {
+        observer.observe(el);
+      });
+    });
+
+    // Handle reduced motion preference
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      document.documentElement.style.scrollBehavior = 'auto';
+      const style = document.createElement('style');
+      style.textContent = `
+        *, *::before, *::after {
+          animation-duration: 0.01ms !important;
+          animation-iteration-count: 1 !important;
+          transition-duration: 0.01ms !important;
+        }
+      `;
+      document.head.appendChild(style);
+    }
+  </script>
 </body>
 </html>

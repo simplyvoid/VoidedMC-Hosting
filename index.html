@@ -616,6 +616,14 @@
       color: var(--icon-purple);
     }
 
+    /* Ad container styling */
+    .ad-container {
+      margin: 2rem auto;
+      max-width: 1200px;
+      padding: 0 2rem;
+      text-align: center;
+    }
+
     /* Footer */
     .footer {
       background: var(--surface);
@@ -759,6 +767,10 @@
         flex-direction: column;
         gap: 1rem;
       }
+
+      .ad-container {
+        padding: 0 1rem;
+      }
     }
 
     /* Performance optimizations */
@@ -768,13 +780,6 @@
     .about,
     .footer {
       will-change: auto;
-    }
-
-    /* Ad container styling */
-    .ad-container {
-      margin: 2rem auto;
-      max-width: 1200px;
-      padding: 0 2rem;
     }
   </style>
 </head>
@@ -828,7 +833,6 @@
     <div class="hero-overlay"></div>
     <div class="hero-container">
       <div class="hero-content">
-
         <h1>VoidedMC Hosting</h1>
         <h2>100% Free Hosting</h2>
         <p>We're not lying... Boot your FREE Minecraft server in a matter of minutes! No catch, no credit card required.</p>
@@ -1114,8 +1118,10 @@
       }, { passive: true });
     }
 
-    // Initialize Google Ads
-    (adsbygoogle = window.adsbygoogle || []).push({});
+    // Initialize Google Ads - MOVED HERE TO BE CALLED ONLY ONCE
+    window.addEventListener('load', () => {
+      (adsbygoogle = window.adsbygoogle || []).push({});
+    });
 
     // Performance optimization: Preload critical resources
     const preloadLink = document.createElement('link');

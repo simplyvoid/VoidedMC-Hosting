@@ -147,6 +147,10 @@
       align-items: center;
     }
 
+    .navbar-logo {
+      flex: 0 0 auto;
+    }
+
     .navbar-logo a {
       font-size: 1.75rem;
       font-weight: 800;
@@ -159,6 +163,9 @@
     }
 
     .navbar-server {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
       display: flex;
       align-items: center;
       gap: 0.5rem;
@@ -177,18 +184,14 @@
     .navbar-server:hover {
       border-color: var(--primary);
       background: var(--surface);
-      transform: translateY(-1px);
-    }
-
-    .navbar-server::before {
-      content: "🎮";
-      font-size: 1rem;
+      transform: translateX(-50%) translateY(-1px);
     }
 
     .navbar-links {
       display: flex;
       gap: 2rem;
       align-items: center;
+      flex: 0 0 auto;
     }
 
     .navbar-links a {
@@ -692,7 +695,24 @@
       }
 
       .navbar-server {
-        display: none;
+        position: static;
+        transform: none;
+        margin: 0 1rem;
+        flex: 1;
+        justify-content: center;
+        order: 2;
+      }
+
+      .navbar-server:hover {
+        transform: translateY(-1px);
+      }
+
+      .navbar-logo {
+        order: 1;
+      }
+
+      .navbar-toggle {
+        order: 3;
       }
 
       .navbar-links {
@@ -710,6 +730,7 @@
         opacity: 0;
         pointer-events: none;
         transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        order: 4;
       }
 
       .navbar-links.show {
@@ -868,11 +889,6 @@
           <div class="feature-icon">⚡</div>
           <h3>Lightning Fast</h3>
           <p>Enterprise-grade hardware ensures your server runs smoothly with minimal lag and maximum performance.</p>
-        </div>
-        <div class="feature">
-          <div class="feature-icon">🛡️</div>
-          <h3>Reliable Support</h3>
-          <p>Our dedicated team is here to help you succeed. Get assistance when you need it, how you need it.</p>
         </div>
       </div>
     </div>

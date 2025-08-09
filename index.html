@@ -139,16 +139,19 @@
     }
 
     .navbar-container {
-      max-width: 1200px;
-      margin: 0 auto;
+      width: 100%;
       padding: 0 2rem;
       display: flex;
       justify-content: space-between;
       align-items: center;
+      position: relative;
+      min-height: 60px;
     }
 
     .navbar-logo {
-      flex: 0 0 auto;
+      position: absolute;
+      left: 2rem;
+      z-index: 10;
     }
 
     .navbar-logo a {
@@ -179,6 +182,7 @@
       transition: all 0.3s ease;
       backdrop-filter: blur(10px);
       color: var(--text-highlight);
+      z-index: 10;
     }
 
     .navbar-server:hover {
@@ -188,10 +192,12 @@
     }
 
     .navbar-links {
+      position: absolute;
+      right: 2rem;
       display: flex;
       gap: 2rem;
       align-items: center;
-      flex: 0 0 auto;
+      z-index: 10;
     }
 
     .navbar-links a {
@@ -692,34 +698,35 @@
     @media (max-width: 768px) {
       .navbar-container {
         padding: 0 1rem;
+        flex-direction: row;
+        justify-content: space-between;
+      }
+
+      .navbar-logo {
+        position: static;
+        left: auto;
+        order: 1;
       }
 
       .navbar-server {
         position: static;
         transform: none;
-        margin: 0 1rem;
-        flex: 1;
-        justify-content: center;
         order: 2;
+        flex: 1;
+        max-width: 200px;
+        margin: 0 1rem;
+        justify-content: center;
       }
 
       .navbar-server:hover {
         transform: translateY(-1px);
       }
 
-      .navbar-logo {
-        order: 1;
-      }
-
-      .navbar-toggle {
-        order: 3;
-      }
-
       .navbar-links {
         position: absolute;
+        right: 1rem;
         top: 100%;
         left: 1rem;
-        right: 1rem;
         background: var(--surface);
         border: 1px solid var(--border);
         border-radius: 12px;
@@ -731,6 +738,7 @@
         pointer-events: none;
         transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         order: 4;
+        z-index: 1000;
       }
 
       .navbar-links.show {
@@ -750,6 +758,8 @@
 
       .navbar-toggle {
         display: block;
+        position: static;
+        order: 3;
       }
 
       .hero-container {
